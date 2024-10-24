@@ -2,8 +2,10 @@
 import { useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { useBoolean } from 'ahooks'
-import { useSelectedLayoutSegment } from 'next/navigation'
+import { useRouter, useSelectedLayoutSegment } from 'next/navigation'
+import { RiArrowLeftSLine } from '@remixicon/react'
 import HeaderBillingBtn from '../billing/header-billing-btn'
+import Button from '../base/button'
 import AccountDropdown from './account-dropdown'
 import AppNav from './app-nav'
 import DatasetNav from './dataset-nav'
@@ -25,6 +27,7 @@ const navClassName = `
 `
 
 const Header = () => {
+  const router = useRouter()
   const { isCurrentWorkspaceEditor, isCurrentWorkspaceDatasetOperator } = useAppContext()
 
   const selectedSegment = useSelectedLayoutSegment()
@@ -48,7 +51,15 @@ const Header = () => {
   return (
     <div className='flex flex-1 items-center justify-between px-4'>
       <div className='flex items-center'>
+        <Button
+          variant="ghost"
+          size="large"
+          onClick={() => router.back()}
+          className="flex items-center"
+        >
+          <RiArrowLeftSLine className="h-6 w-6 text-gray-700" />
 
+        </Button>
       </div>
       {isMobile && (
         <div className='flex'>

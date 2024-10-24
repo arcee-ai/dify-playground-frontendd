@@ -4,21 +4,15 @@ import { Fragment, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useContext } from 'use-context-selector'
 import { RiArrowDownSLine } from '@remixicon/react'
-import Link from 'next/link'
 import { Menu, Transition } from '@headlessui/react'
-import Indicator from '../indicator'
+import { Cog8ToothIcon } from '@heroicons/react/20/solid'
 import AccountAbout from '../account-about'
-import { mailToSupport } from '../utils/util'
-import WorkplaceSelector from './workplace-selector'
-import classNames from '@/utils/classnames'
 import I18n from '@/context/i18n'
 import Avatar from '@/app/components/base/avatar'
 import { logout } from '@/service/common'
 import { useAppContext } from '@/context/app-context'
-import { ArrowUpRight } from '@/app/components/base/icons/src/vender/line/arrows'
 import { LogOut01 } from '@/app/components/base/icons/src/vender/line/general'
 import { useModalContext } from '@/context/modal-context'
-import { LanguagesSupported } from '@/i18n/language'
 import { useProviderContext } from '@/context/provider-context'
 import { Plan } from '@/app/components/billing/type'
 
@@ -64,12 +58,12 @@ export default function AppSelector({ isMobile }: IAppSelector) {
                   className={`
                     inline-flex items-center
                     rounded-[20px] py-1 pr-2.5 pl-1 text-sm
-                  text-gray-700 hover:bg-gray-200
+                  text-gray-600 hover:bg-gray-100 hover:text-gray-900 font-medium
                     mobile:px-1
-                    ${open && 'bg-gray-200'}
+                    ${open && 'bg-primary-50 text-primary-500 hover:bg-primary-100 hover:text-primary-700'}
                   `}
                 >
-                  <Avatar name={userProfile.name} className='sm:mr-2 mr-0' size={32} />
+                  <Avatar name={userProfile.name} className='sm:mr-2 mr-0' size={24} />
                   {!isMobile && <>
                     {userProfile.name}
                     <RiArrowDownSLine className="w-3 h-3 ml-1 text-gray-700" />
@@ -88,109 +82,42 @@ export default function AppSelector({ isMobile }: IAppSelector) {
                 <Menu.Items
                   className="
                     absolute right-0 mt-1.5 w-60 max-w-80
-                    divide-y divide-gray-100 origin-top-right rounded-lg bg-white
+                    p-1 divide-y divide-gray-100 origin-top-right rounded-xl bg-white border border-gray-200
                     shadow-lg
                   "
                 >
                   <Menu.Item>
-                    <div className='flex flex-nowrap items-center px-4 py-[13px]'>
-                      <Avatar name={userProfile.name} size={36} className='mr-3' />
+                    <div className='flex flex-nowrap items-center py-3 px-2'>
+                      <Avatar name={userProfile.name} size={32} className='mr-3' />
                       <div className='grow'>
-                        <div className='leading-5 font-normal text-[14px] text-gray-800 break-all'>{userProfile.name}</div>
+                        <div className='leading-5 font-medium text-sm text-gray-900 break-all'>{userProfile.name}</div>
                         <div className='leading-[18px] text-xs font-normal text-gray-500 break-all'>{userProfile.email}</div>
                       </div>
                     </div>
                   </Menu.Item>
-                  <div className='px-1 py-1'>
-                    <div className='mt-2 px-3 text-xs font-medium text-gray-500'>{t('common.userProfile.workspace')}</div>
-                    <WorkplaceSelector />
-                  </div>
+
                   <div className="px-1 py-1">
+
                     <Menu.Item>
-                      <Link
-                        className={classNames(itemClassName, 'group justify-between')}
-                        href='/account'
-                        target='_self' rel='noopener noreferrer'>
-                        <div>{t('common.account.account')}</div>
-                        <ArrowUpRight className='hidden w-[14px] h-[14px] text-gray-500 group-hover:flex' />
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <div className={itemClassName} onClick={() => setShowAccountSettingModal({ payload: 'members' })}>
-                        <div>{t('common.userProfile.settings')}</div>
+                      <div className='flex items-center h-9 px-3 gap-1.5 rounded-lg cursor-pointer group hover:bg-gray-50' onClick={() => setShowAccountSettingModal({ payload: 'members' })}>
+                        <Cog8ToothIcon className='w-4 h-4 text-gray-700 hover:text-black' />
+                        <div className='font-medium text-sm text-gray-700 hover:text-black'>{t('common.userProfile.settings')}</div>
                       </div>
                     </Menu.Item>
-                    {canEmailSupport && <Menu.Item>
-                      <a
-                        className={classNames(itemClassName, 'group justify-between')}
-                        href={mailToSupport(userProfile.email, plan.type, langeniusVersionInfo.current_version)}
-                        target='_blank' rel='noopener noreferrer'>
-                        <div>{t('common.userProfile.emailSupport')}</div>
-                        <ArrowUpRight className='hidden w-[14px] h-[14px] text-gray-500 group-hover:flex' />
-                      </a>
-                    </Menu.Item>}
                     <Menu.Item>
-                      <Link
-                        className={classNames(itemClassName, 'group justify-between')}
-                        href='https://github.com/langgenius/dify/discussions/categories/feedbacks'
-                        target='_blank' rel='noopener noreferrer'>
-                        <div>{t('common.userProfile.communityFeedback')}</div>
-                        <ArrowUpRight className='hidden w-[14px] h-[14px] text-gray-500 group-hover:flex' />
-                      </Link>
+                      <div onClick={() => handleLogout()}>
+                        <div
+                          className='flex items-center h-9 px-3 gap-1.5 rounded-lg cursor-pointer group hover:bg-gray-50'
+                        >
+                          <LogOut01 className='w-4 h-4 text-gray-700 hover:text-black' />
+                          <div className='font-medium text-sm text-gray-700 hover:text-black'>{t('common.userProfile.logout')}</div>
+
+                        </div>
+                      </div>
                     </Menu.Item>
-                    <Menu.Item>
-                      <Link
-                        className={classNames(itemClassName, 'group justify-between')}
-                        href='https://discord.gg/5AEfbxcd9k'
-                        target='_blank' rel='noopener noreferrer'>
-                        <div>{t('common.userProfile.community')}</div>
-                        <ArrowUpRight className='hidden w-[14px] h-[14px] text-gray-500 group-hover:flex' />
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <Link
-                        className={classNames(itemClassName, 'group justify-between')}
-                        href={
-                          locale !== LanguagesSupported[1] ? 'https://docs.dify.ai/' : `https://docs.dify.ai/v/${locale.toLowerCase()}/`
-                        }
-                        target='_blank' rel='noopener noreferrer'>
-                        <div>{t('common.userProfile.helpCenter')}</div>
-                        <ArrowUpRight className='hidden w-[14px] h-[14px] text-gray-500 group-hover:flex' />
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <Link
-                        className={classNames(itemClassName, 'group justify-between')}
-                        href='https://roadmap.dify.ai'
-                        target='_blank' rel='noopener noreferrer'>
-                        <div>{t('common.userProfile.roadmap')}</div>
-                        <ArrowUpRight className='hidden w-[14px] h-[14px] text-gray-500 group-hover:flex' />
-                      </Link>
-                    </Menu.Item>
-                    {
-                      document?.body?.getAttribute('data-public-site-about') !== 'hide' && (
-                        <Menu.Item>
-                          <div className={classNames(itemClassName, 'justify-between')} onClick={() => setAboutVisible(true)}>
-                            <div>{t('common.userProfile.about')}</div>
-                            <div className='flex items-center'>
-                              <div className='mr-2 text-xs font-normal text-gray-500'>{langeniusVersionInfo.current_version}</div>
-                              <Indicator color={langeniusVersionInfo.current_version === langeniusVersionInfo.latest_version ? 'green' : 'orange'} />
-                            </div>
-                          </div>
-                        </Menu.Item>
-                      )
-                    }
+
                   </div>
-                  <Menu.Item>
-                    <div className='p-1' onClick={() => handleLogout()}>
-                      <div
-                        className='flex items-center justify-between h-9 px-3 rounded-lg cursor-pointer group hover:bg-gray-50'
-                      >
-                        <div className='font-normal text-[14px] text-gray-700'>{t('common.userProfile.logout')}</div>
-                        <LogOut01 className='hidden w-[14px] h-[14px] text-gray-500 group-hover:flex' />
-                      </div>
-                    </div>
-                  </Menu.Item>
+
                 </Menu.Items>
               </Transition>
             </>

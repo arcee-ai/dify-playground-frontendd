@@ -12,7 +12,7 @@ type AvatarProps = {
 const Avatar = ({
   name,
   avatar,
-  size = 30,
+  size = 24,
   className,
   textClassName,
 }: AvatarProps) => {

@@ -19,7 +19,6 @@ import { fetchAppList } from '@/service/apps'
 import { useAppContext } from '@/context/app-context'
 import { NEED_REFRESH_APP_LIST_KEY } from '@/config'
 import { CheckModal } from '@/hooks/use-pay'
-import TabSliderNew from '@/app/components/base/tab-slider-new'
 import { useTabSearchParams } from '@/hooks/use-tab-searchparams'
 import Input from '@/app/components/base/input'
 import { useStore as useTagStore } from '@/app/components/base/tag-management/store'
@@ -34,13 +33,18 @@ const getKey = (
   keywords: string,
 ) => {
   if (!pageIndex || previousPageData.has_more) {
-    const params: any = { url: 'apps', params: { page: pageIndex + 1, limit: 30, name: keywords } }
+    const params: any = { url: 'apps', params: { page: pageIndex + 1, limit: 30, name: keywords, mode: 'workflow' } }
 
-    if (activeTab !== 'all')
+    /* if (activeTab !== 'all')
       params.params.mode = activeTab
     else
       delete params.params.mode
 
+    if (tags.length)
+      params.params.tag_ids = tags
+
+    return params
+  } */
     if (tags.length)
       params.params.tag_ids = tags
 
@@ -125,12 +129,12 @@ const Apps = () => {
 
   return (
     <>
-      <div className='sticky top-0 flex justify-between items-center pt-4 px-12 pb-2 leading-[56px] bg-gray-100 z-10 flex-wrap gap-y-2'>
-        <TabSliderNew
+      <div className='sticky top-0 flex justify-between items-center pt-4 px-12 pb-2 leading-[56px] border-b border-gray-100 bg-white z-10 flex-wrap gap-y-2'>
+        {/* <TabSliderNew
           value={activeTab}
           onChange={setActiveTab}
           options={options}
-        />
+        /> */}
         <div className='flex items-center gap-2'>
           <TagFilter type='app' value={tagFilterValue} onChange={handleTagsChange} />
           <Input
