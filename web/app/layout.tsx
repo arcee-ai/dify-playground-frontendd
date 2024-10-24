@@ -1,10 +1,17 @@
 import type { Viewport } from 'next'
+import { Archivo } from 'next/font/google'
 import I18nServer from './components/i18n-server'
 import BrowserInitor from './components/browser-initor'
 import SentryInitor from './components/sentry-initor'
 import { getLocaleOnServer } from '@/i18n/server'
 import './styles/globals.css'
 import './styles/markdown.scss'
+
+const archivo = Archivo({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+})
 
 export const metadata = {
   title: 'Dify',
@@ -26,7 +33,7 @@ const LocaleLayout = ({
   const locale = getLocaleOnServer()
 
   return (
-    <html lang={locale ?? 'en'} className="h-full" data-theme="light">
+    <html lang={locale ?? 'en'} className={`h-full ${archivo.className}`} data-theme="light">
       <head>
         <meta name="theme-color" content="#FFFFFF" />
         <meta name="mobile-web-app-capable" content="yes" />

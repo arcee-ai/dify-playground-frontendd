@@ -1,0 +1,139 @@
+:root {
+    /*------standard------*/
+    --color-basic-white: #FFF;
+    --color-basic-black: #000;
+    /*-------gray-------*/
+    --color-basic-gray-25: #F8F8F8;
+    --color-basic-gray-50: #F3F3F3;
+    --color-basic-gray-100: #E9E9E9;
+    --color-basic-gray-200: #DCDCDC;
+    --color-basic-gray-300: #BCBCBC;
+    --color-basic-gray-400: #959595;
+    --color-basic-gray-500: #797979;
+    --color-basic-gray-600: #636363;
+    --color-basic-gray-700: #545455;
+    --color-basic-gray-800: #414141;
+    --color-basic-gray-900: #2B2B2B;
+
+    /*-------primary-------*/
+    --color-basic-primary-25: #FFF9FC;
+    --color-basic-primary-50: #FFF1F7;
+    --color-basic-primary-100: #FFE2EE;
+    --color-basic-primary-200: #FFB5D3;
+    --color-basic-primary-300: #FF559A;
+    --color-basic-primary-400: #E72071;
+    --color-basic-primary-500: #D41261;
+    --color-basic-primary-600: #C40452;
+    --color-basic-primary-700: #A70044;
+    --color-basic-primary-800: #8A0139;
+    --color-basic-primary-900: #640029;
+
+    /*-------red-------*/
+    --color-basic-red-50: #FFF3F4;
+    --color-basic-red-100: #FFE2E3;
+    --color-basic-red-200: #FFB9BA;
+    --color-basic-red-300: #F36F71;
+    --color-basic-red-400: #E72023;
+    --color-basic-red-500: #D41215;
+    --color-basic-red-600: #C40408;
+    --color-basic-red-700: #A70003;
+    --color-basic-red-800: #8A0103;
+    --color-basic-red-900: #640002;
+
+    /*-------blue-------*/
+    --color-basic-blue-50: #F3FCFF;
+    --color-basic-blue-100: #E2F5FF;
+    --color-basic-blue-200: #B9EFFF;
+    --color-basic-blue-300: #6FD8F3;
+    --color-basic-blue-400: #20BFE7;
+    --color-basic-blue-500: #12A1D4;
+    --color-basic-blue-600: #0481C4;
+    --color-basic-blue-700: #005FA7;
+    --color-basic-blue-800: #014A8A;
+    --color-basic-blue-900: #003764;
+
+    /*-------green-------*/
+    --color-basic-green-50: #F3FFF5;
+    --color-basic-green-100: #E3FFE2;
+    --color-basic-green-200: #B9FFBF;
+    --color-basic-green-300: #6FF374;
+    --color-basic-green-400: #20E72A;
+    --color-basic-green-500: #12D425;
+    --color-basic-green-600: #04C40B;
+    --color-basic-green-700: #00A70E;
+    --color-basic-green-800: #018A0C;
+    --color-basic-green-900: #00640C;
+
+    /*-------yellow-------*/
+    --color-basic-yellow-50: #FFFBF3;
+    --color-basic-yellow-100: #FFF6E2;
+    --color-basic-yellow-200: #FFEFB9;
+    --color-basic-yellow-300: #F3D46F;
+    --color-basic-yellow-400: #E7B520;
+    --color-basic-yellow-500: #D49A12;
+    --color-basic-yellow-600: #C47E04;
+    --color-basic-yellow-700: #A75900;
+    --color-basic-yellow-800: #8A4101;
+    --color-basic-yellow-900: #642800;
+
+    /*-------teal-------*/
+    --color-basic-teal-50: #F3FFFC;
+    --color-basic-teal-100: #E2FFF5;
+    --color-basic-teal-200: #B9FFE9;
+    --color-basic-teal-300: #6FF3D6;
+    --color-basic-teal-400: #20E7C9;
+    --color-basic-teal-500: #12D4BE;
+    --color-basic-teal-600: #04C4AE;
+    --color-basic-teal-700: #00A79C;
+    --color-basic-teal-800: #018A7C;
+    --color-basic-teal-900: #00645F;
+    
+    /*------dark trans------*/
+    --color-basic-darktrans-50: #00000005;
+    --color-basic-darktrans-100: #00000010;
+    --color-basic-darktrans-200: #00000015;
+    --color-basic-darktrans-300: #00000020;
+    --color-basic-darktrans-400: #00000025;
+    --color-basic-darktrans-500: #00000035;
+
+    /*------red trans------*/
+    --color-basic-redtrans-50: #E7202310;
+    --color-basic-redtrans-100: #E7202315;
+    --color-basic-redtrans-200: #E7202320;
+    --color-basic-redtrans-300: #E7202325;
+    --color-basic-redtrans-400: #E7202330;
+    --color-basic-redtrans-500: #E7202335;
+
+    /*------primary trans------*/
+    --color-basic-primarytrans-50: #E7207110;
+    --color-basic-primarytrans-100: #E7207115;
+    --color-basic-primarytrans-200: #E7207120;
+    --color-basic-primarytrans-300: #E7207125;
+    --color-basic-primarytrans-400: #E7207130;
+    --color-basic-primarytrans-500: #E7207135;
+
+    /*------green trans------*/
+    --color-basic-greentrans-50: #12D42510;
+    --color-basic-greentrans-100: #12D42515;
+    --color-basic-greentrans-200: #12D42520;
+    --color-basic-greentrans-300: #12D42525;
+    --color-basic-greentrans-400: #12D42530;
+    --color-basic-greentrans-500: #12D42535;
+
+    /*------yellow trans------*/
+    --color-basic-yellowtrans-50: #D49A1210;
+    --color-basic-yellowtrans-100: #D49A1215;
+    --color-basic-yellowtrans-200: #D49A1220;
+    --color-basic-yellowtrans-300: #D49A1225;
+    --color-basic-yellowtrans-400: #D49A1230;
+    --color-basic-yellowtrans-500: #D49A1235;
+
+     /*------blue trans------*/
+     --color-basic-bluetrans-50: #12A1D410;
+     --color-basic-bluetrans-100: #12A1D415;
+     --color-basic-bluetrans-200: #12A1D420;
+     --color-basic-bluetrans-300: #12A1D425;
+     --color-basic-bluetrans-400: #12A1D430;
+     --color-basic-bluetrans-500: #12A1D435;
+
+}

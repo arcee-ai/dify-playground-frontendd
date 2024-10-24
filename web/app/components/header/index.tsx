@@ -3,7 +3,6 @@ import { useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { useBoolean } from 'ahooks'
 import { useSelectedLayoutSegment } from 'next/navigation'
-import { Bars3Icon } from '@heroicons/react/20/solid'
 import HeaderBillingBtn from '../billing/header-billing-btn'
 import AccountDropdown from './account-dropdown'
 import AppNav from './app-nav'
@@ -49,18 +48,7 @@ const Header = () => {
   return (
     <div className='flex flex-1 items-center justify-between px-4'>
       <div className='flex items-center'>
-        {isMobile && <div
-          className='flex items-center justify-center h-8 w-8 cursor-pointer'
-          onClick={toggle}
-        >
-          <Bars3Icon className="h-4 w-4 text-gray-500" />
-        </div>}
-        {!isMobile && <>
-          <Link href="/apps" className='flex items-center mr-4'>
-            <LogoSite className='object-contain' />
-          </Link>
-          <GithubStar />
-        </>}
+
       </div>
       {isMobile && (
         <div className='flex'>

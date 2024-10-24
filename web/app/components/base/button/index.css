@@ -10,20 +10,20 @@
   }
 
   .btn-small {
-    @apply px-2 h-6 rounded-md text-xs font-medium;
+    @apply px-2 h-6 rounded-full text-xs leading-4 font-medium gap-1;
   }
 
   .btn-medium {
-    @apply px-3.5 h-8 rounded-lg text-[13px] leading-4 font-medium;
+    @apply px-4 h-9 rounded-full text-sm leading-5 font-medium gap-2;
   }
 
   .btn-large {
-    @apply px-4 h-9 rounded-[10px] text-sm font-semibold;
+    @apply px-6 h-12 rounded-full text-base leading-6 font-semibold gap-3;
   }
 
   .btn-primary {
     @apply 
-    shadow
+    shadow-none
     bg-components-button-primary-bg
     border-components-button-primary-border
     hover:bg-components-button-primary-bg-hover
@@ -32,7 +32,8 @@
   }
 
   .btn-primary.btn-destructive {
-    @apply 
+    @apply
+    shadow-none 
     bg-components-button-destructive-primary-bg
     border-components-button-destructive-primary-border
     hover:bg-components-button-destructive-primary-bg-hover
@@ -58,8 +59,8 @@
 
   .btn-secondary {
     @apply 
-    border-[0.5px]
-    shadow-xs
+    border
+    shadow-none
     bg-components-button-secondary-bg 
     border-components-button-secondary-border 
     hover:bg-components-button-secondary-bg-hover 
@@ -93,8 +94,8 @@
   
   .btn-secondary-accent {
     @apply 
-    border-[0.5px]
-    shadow-xs
+    border
+    shadow-none
     bg-components-button-secondary-bg 
     border-components-button-secondary-border 
     hover:bg-components-button-secondary-bg-hover 

@@ -2,6 +2,7 @@
 @tailwind base;
 @tailwind components;
 
+@import '../../themes/theme-colors.css';
 @import '../../themes/light.css';
 @import '../../themes/dark.css';
 
@@ -118,13 +119,13 @@ button:focus-within {
   padding-bottom: 1.5rem;
   line-height: 1.5;
   font-size: 1.125rem;
-  color: #111928;
+  color: var(--color-basic-black);
 }
 
 .h2 {
   font-size: 14px;
   font-weight: 500;
-  color: #111928;
+  color: var(--color-basic-black);
   line-height: 1.5;
 }
 
@@ -133,6 +134,9 @@ button:focus-within {
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
+}
+a,button,.btn{
+  transition: color .2s ease-out,  background-color .2s ease-out, border-color .2s ease-out;
 }
 
 .system-2xs-regular-uppercase {

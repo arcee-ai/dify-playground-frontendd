@@ -103,7 +103,7 @@ const WorkflowPreview = () => {
                   <div
                     className={cn(
                       'mr-6 py-3 border-b-2 border-transparent text-[13px] font-semibold leading-[18px] text-gray-400 cursor-pointer',
-                      currentTab === 'INPUT' && '!border-[rgb(21,94,239)] text-gray-700',
+                      currentTab === 'INPUT' && '!border-primary-500 text-gray-700',
                     )}
                     onClick={() => switchTab('INPUT')}
                   >{t('runLog.input')}</div>
@@ -111,7 +111,7 @@ const WorkflowPreview = () => {
                 <div
                   className={cn(
                     'mr-6 py-3 border-b-2 border-transparent text-[13px] font-semibold leading-[18px] text-gray-400 cursor-pointer',
-                    currentTab === 'RESULT' && '!border-[rgb(21,94,239)] text-gray-700',
+                    currentTab === 'RESULT' && '!border-primary-500 text-gray-700',
                     !workflowRunningData && 'opacity-30 !cursor-not-allowed',
                   )}
                   onClick={() => {
@@ -123,7 +123,7 @@ const WorkflowPreview = () => {
                 <div
                   className={cn(
                     'mr-6 py-3 border-b-2 border-transparent text-[13px] font-semibold leading-[18px] text-gray-400 cursor-pointer',
-                    currentTab === 'DETAIL' && '!border-[rgb(21,94,239)] text-gray-700',
+                    currentTab === 'DETAIL' && '!border-primary-500 text-gray-700',
                     !workflowRunningData && 'opacity-30 !cursor-not-allowed',
                   )}
                   onClick={() => {
@@ -135,7 +135,7 @@ const WorkflowPreview = () => {
                 <div
                   className={cn(
                     'mr-6 py-3 border-b-2 border-transparent text-[13px] font-semibold leading-[18px] text-gray-400 cursor-pointer',
-                    currentTab === 'TRACING' && '!border-[rgb(21,94,239)] text-gray-700',
+                    currentTab === 'TRACING' && '!border-primary-500 text-gray-700',
                     !workflowRunningData && 'opacity-30 !cursor-not-allowed',
                   )}
                   onClick={() => {
@@ -146,8 +146,8 @@ const WorkflowPreview = () => {
                 >{t('runLog.tracing')}</div>
               </div>
               <div className={cn(
-                'grow bg-components-panel-bg h-0 overflow-y-auto rounded-b-2xl',
-                (currentTab === 'RESULT' || currentTab === 'TRACING') && '!bg-background-section-burn',
+                'grow bg-white h-0 overflow-y-auto rounded-b-2xl',
+                (currentTab === 'RESULT' || currentTab === 'TRACING') && '!bg-gray-50',
               )}>
                 {currentTab === 'INPUT' && showInputsPanel && (
                   <InputsPanel onRun={() => switchTab('RESULT')} />
@@ -157,7 +157,6 @@ const WorkflowPreview = () => {
                     <ResultText
                       isRunning={workflowRunningData?.result?.status === WorkflowRunningStatus.Running || !workflowRunningData?.result}
                       outputs={workflowRunningData?.resultText}
-                      allFiles={workflowRunningData?.result?.files as any}
                       error={workflowRunningData?.result?.error}
                       onClick={() => switchTab('DETAIL')}
                     />
@@ -192,19 +191,18 @@ const WorkflowPreview = () => {
                   />
                 )}
                 {currentTab === 'DETAIL' && !workflowRunningData?.result && (
-                  <div className='flex h-full items-center justify-center bg-components-panel-bg'>
+                  <div className='flex h-full items-center justify-center bg-white'>
                     <Loading />
                   </div>
                 )}
                 {currentTab === 'TRACING' && (
                   <TracingPanel
-                    className='bg-background-section-burn'
                     list={workflowRunningData?.tracing || []}
                     onShowIterationDetail={handleShowIterationDetail}
                   />
                 )}
                 {currentTab === 'TRACING' && !workflowRunningData?.tracing?.length && (
-                  <div className='flex h-full items-center justify-center !bg-background-section-burn'>
+                  <div className='flex h-full items-center justify-center bg-gray-50'>
                     <Loading />
                   </div>
                 )}
