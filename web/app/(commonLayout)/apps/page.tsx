@@ -8,6 +8,7 @@ const AppList = async () => {
   return (
     <div className='relative flex flex-col overflow-y-auto bg-white shrink-0 h-0 grow'>
       <Apps />
+
     </div >
   )
 }

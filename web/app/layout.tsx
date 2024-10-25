@@ -1,5 +1,6 @@
 import type { Viewport } from 'next'
 import { Archivo } from 'next/font/google'
+import DifyInfo from './dify-info'
 import I18nServer from './components/i18n-server'
 import BrowserInitor from './components/browser-initor'
 import SentryInitor from './components/sentry-initor'
@@ -25,15 +26,15 @@ export const viewport: Viewport = {
   userScalable: false,
 }
 
-const LocaleLayout = ({
-  children,
-}: {
-  children: React.ReactNode
-}) => {
+const LocaleLayout = ({ children }: { children: React.ReactNode }) => {
   const locale = getLocaleOnServer()
 
   return (
-    <html lang={locale ?? 'en'} className={`h-full ${archivo.className}`} data-theme="light">
+    <html
+      lang={locale ?? 'en'}
+      className={`h-full ${archivo.className}`}
+      data-theme="light"
+    >
       <head>
         <meta name="theme-color" content="#FFFFFF" />
         <meta name="mobile-web-app-capable" content="yes" />
@@ -45,11 +46,17 @@ const LocaleLayout = ({
         data-api-prefix={process.env.NEXT_PUBLIC_API_PREFIX}
         data-pubic-api-prefix={process.env.NEXT_PUBLIC_PUBLIC_API_PREFIX}
         data-public-edition={process.env.NEXT_PUBLIC_EDITION}
-        data-public-support-mail-login={process.env.NEXT_PUBLIC_SUPPORT_MAIL_LOGIN}
+        data-public-support-mail-login={
+          process.env.NEXT_PUBLIC_SUPPORT_MAIL_LOGIN
+        }
         data-public-sentry-dsn={process.env.NEXT_PUBLIC_SENTRY_DSN}
-        data-public-maintenance-notice={process.env.NEXT_PUBLIC_MAINTENANCE_NOTICE}
+        data-public-maintenance-notice={
+          process.env.NEXT_PUBLIC_MAINTENANCE_NOTICE
+        }
         data-public-site-about={process.env.NEXT_PUBLIC_SITE_ABOUT}
-        data-public-text-generation-timeout-ms={process.env.NEXT_PUBLIC_TEXT_GENERATION_TIMEOUT_MS}
+        data-public-text-generation-timeout-ms={
+          process.env.NEXT_PUBLIC_TEXT_GENERATION_TIMEOUT_MS
+        }
       >
         <BrowserInitor>
           <SentryInitor>
@@ -57,6 +64,7 @@ const LocaleLayout = ({
           </SentryInitor>
         </BrowserInitor>
       </body>
+      <DifyInfo />
     </html>
   )
 }

@@ -184,4 +184,154 @@
     @apply 
     text-components-button-secondary-accent-text-disabled;
   }
+
+  .btn-large.btn-icon {
+    @apply px-3;
+  }
+
+  .btn-medium.btn-icon {
+    @apply px-2;
+  }
+
+  .btn-small.btn-icon {
+    @apply px-1;
+  }
+
+  .btn-large.btn-icon-left {
+    @apply pl-3 pr-6;
+  }
+
+  .btn-medium.btn-icon-left {
+    @apply pl-2 pr-4;
+  }
+
+  .btn-small.btn-icon-left {
+    @apply pl-1 pr-2;
+  }
+
+  .btn-large.btn-icon-right {
+    @apply pl-6 pr-3;
+  }
+
+  .btn-medium.btn-icon-right {
+    @apply pl-4 pr-2;
+  }
+
+  .btn-small.btn-icon-right {
+    @apply pl-2 pr-1;
+  }
+
+  .btn-large.btn-rounded {
+    @apply rounded-[12px];
+  }
+
+  .btn-medium.btn-rounded {
+    @apply rounded-[8px];
+  }
+
+  .btn-small.btn-rounded {
+    @apply rounded-[4px];
+  }
+
+  .btn .a-icon--btn path {
+    transition: fill .3s ease-out;
+
+  }
+  /*ghost-btn-icons*/
+  .btn-ghost .a-icon--btn path {
+    fill: var(--color-basic-gray-500);
+  }
+
+  .btn-ghost:hover .a-icon--btn path {
+    fill: var(--color-basic-gray-800);
+  }
+  .btn-ghost.btn-disabled:hover .a-icon--btn path,
+  .btn-ghost.btn-disabled .a-icon--btn path{
+    fill: var(--color-basic-gray-200);
+  }
+  /*ghost-destructive-btn-icons*/
+  .btn-ghost.btn-destructive .a-icon--btn path {
+    fill: var(--color-basic-red-400);
+  }
+
+  .btn-ghost.btn-destructive:hover .a-icon--btn path {
+    fill: var(--color-basic-red-500);
+  }
+  .btn-ghost.btn-destructive.btn-disabled:hover .a-icon--btn path,
+  .btn-ghost.btn-destructive.btn-disabled .a-icon--btn path{
+    fill: var(--color-basic-red-200);
+  }
+   /*tetriary-btn-icons*/
+   .btn-tetriary .a-icon--btn path {
+    fill: var(--color-basic-gray-500);
+  }
+
+  .btn-tetriary:hover .a-icon--btn path {
+    fill: var(--color-basic-gray-800);
+  }
+  .btn-tetriary.btn-disabled:hover .a-icon--btn path,
+  .btn-tetriary.btn-disabled .a-icon--btn path{
+    fill: var(--color-basic-gray-200);
+  }
+  /*tetriary-destructive-btn-icons*/
+  .btn-tetriary.btn-destructive .a-icon--btn path {
+    fill: var(--color-basic-red-400);
+  }
+
+  .btn-tetriary.btn-destructive:hover .a-icon--btn path {
+    fill: var(--color-basic-red-500);
+  }
+  .btn-tetriary.btn-destructive.btn-disabled:hover .a-icon--btn path,
+  .btn-tetriary.btn-destructive.btn-disabled .a-icon--btn path{
+    fill: var(--color-basic-red-200);
+  }
+  /*primary-btn-icons*/
+  .btn-primary .a-icon--btn path {
+    fill: var(--color-basic-primary-50);
+  }
+
+  .btn-primary:hover .a-icon--btn path {
+    fill: var(--color-basic-white);
+  }
+  .btn-primary.btn-disabled:hover .a-icon--btn path,
+  .btn-primary.btn-disabled .a-icon--btn path{
+    fill: var(--color-basic-primary-100);
+  }
+   /*secondary-btn-icons*/
+   .btn-secondary .a-icon--btn path {
+    fill: var(--color-basic-gray-700);
+  }
+
+  .btn-secondary:hover .a-icon--btn path {
+    fill: var(--color-basic-black);
+  }
+  .btn-secondary.btn-disabled:hover .a-icon--btn path
+  .btn-secondary.btn-disabled .a-icon--btn path {
+    fill: var(--color-basic-gray-200);
+  }
+  /*secondary-btn-accent-icons*/
+  .btn-secondary-accent .a-icon--btn path {
+    fill: var(--color-basic-primary-400);
+  }
+
+  .btn-secondary-accent:hover .a-icon--btn path {
+    fill: var(--color-basic-primary-500);
+  }
+  .btn-secondary-accent.btn-disabled .a-icon--btn path,
+  .btn-secondary-accent.btn-disabled:hover .a-icon--btn path {
+    fill: var(--color-basic-primary-100);
+  }
+  /*secondary destructive*/
+  .btn-secondary.btn-destructive .a-icon--btn path{
+    fill: var(--color-basic-red-400);
+  }
+  .btn-secondary.btn-destructive:hover .a-icon--btn path{
+    fill: var(--color-basic-red-500);
+  }
+  .btn-secondary.btn-destructive.btn-disabled .a-icon--btn path,
+  .btn-secondary.btn-destructive.btn-disabled:hover .a-icon--btn path{
+    fill: var(--color-basic-red-200);
+  }
+  
 }
+

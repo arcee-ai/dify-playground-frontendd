@@ -3,7 +3,7 @@
 }
 
 .appIcon.large {
-  @apply w-10 h-10;
+  @apply w-12 h-12;
 }
 
 .appIcon.small {
@@ -20,4 +20,7 @@
 
 .appIcon.rounded {
   @apply rounded-full;
+}
+.appIcon{
+  @apply rounded-full border border-gray-200;
 }
