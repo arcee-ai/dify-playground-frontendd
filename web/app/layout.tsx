@@ -63,8 +63,8 @@ const LocaleLayout = ({ children }: { children: React.ReactNode }) => {
             <I18nServer>{children}</I18nServer>
           </SentryInitor>
         </BrowserInitor>
+        <DifyInfo />
       </body>
-      <DifyInfo />
     </html>
   )
 }
