@@ -2,7 +2,9 @@
 
 @layer components {
   .btn {
-    @apply inline-flex justify-center items-center cursor-pointer whitespace-nowrap;
+    @apply inline-flex justify-center items-center cursor-pointer whitespace-nowrap
+      transition duration-300 ease-out;
+    transition-property: color, background-color, border-color;
   }
 
   .btn-disabled {
@@ -21,168 +23,181 @@
     @apply px-6 h-12 rounded-full text-base leading-6 font-semibold gap-3;
   }
 
+  .btn-large.btn-tertiary,
+  .btn-medium.btn-tertiary,
+  .btn-small.btn-tertiary {
+    @apply px-0 h-fit rounded-none text-base;
+  }
+
   .btn-primary {
-    @apply 
-    shadow-none
-    bg-components-button-primary-bg
-    border-components-button-primary-border
-    hover:bg-components-button-primary-bg-hover
-    hover:border-components-button-primary-border-hover
-    text-components-button-primary-text;
+    @apply border-none
+      shadow-none
+      text-[var(--color-components-button-primary-text)]
+      disabled:text-[var(--color-components-button-primary-text-disabled)]
+      bg-[var(--color-components-button-primary-bg)]
+      hover:bg-[var(--color-components-button-primary-bg-hover)]
+      active:bg-[var(--color-components-button-primary-bg-active)]
+      disabled:bg-[var(--color-components-button-primary-bg-disabled)];
   }
 
   .btn-primary.btn-destructive {
-    @apply
-    shadow-none 
-    bg-components-button-destructive-primary-bg
-    border-components-button-destructive-primary-border
-    hover:bg-components-button-destructive-primary-bg-hover
-    hover:border-components-button-destructive-primary-border-hover
-    text-components-button-destructive-primary-text;
+    @apply shadow-none 
+      border-none
+      text-[var(--color-components-button-destructive-primary-text)]
+      disabled:text-[var(--color-components-button-destructive-primary-text)]
+      bg-[var(--color-components-button-destructive-primary-bg)]
+      hover:bg-[var(--color-components-button-destructive-primary-bg-hover)]
+      active:bg-[var(--color-components-button-destructive-primary-bg-active)]
+      disabled:bg-[var(--color-components-button-destructive-primary-bg-disabled)];
   }
 
   .btn-primary.btn-disabled {
-    @apply 
-    shadow-none
-    bg-components-button-primary-bg-disabled
-    border-components-button-primary-border-disabled
-    text-components-button-primary-text-disabled;
+    @apply shadow-none
+      bg-[var(--color-components-button-primary-bg-disabled)]
+      border-[var(--color-components-button-primary-border-disabled)]
+      text-[var(--color-components-button-primary-text-disabled)]
+      disabled:bg-[var(--color-components-button-primary-bg-disabled)];
   }
 
   .btn-primary.btn-destructive.btn-disabled {
-    @apply 
-    shadow-none
-    bg-components-button-destructive-primary-bg-disabled
-    border-components-button-destructive-primary-border-disabled
-    text-components-button-destructive-primary-text-disabled;
+    @apply shadow-none
+      bg-[var(--color-components-button-destructive-primary-bg-disabled)]
+      border-[var(--color-components-button-destructive-primary-border-disabled)]
+      text-[var(--color-components-button-destructive-primary-text-disabled)]
+      disabled:bg-[var(--color-components-button-destructive-primary-bg-disabled)];
   }
 
   .btn-secondary {
-    @apply 
-    border
-    shadow-none
-    bg-components-button-secondary-bg 
-    border-components-button-secondary-border 
-    hover:bg-components-button-secondary-bg-hover 
-    hover:border-components-button-secondary-border-hover 
-    text-components-button-secondary-text;
+    @apply border
+      shadow-none
+      bg-[var(--color-components-button-secondary-bg)]
+      border-[var(--color-components-button-secondary-border)]
+      hover:bg-[var(--color-components-button-secondary-bg-hover)]
+      active:bg-[var(--color-components-button-secondary-bg-active)]
+      hover:border-[var(--color-components-button-secondary-border-hover)]
+      active:border-[var(--color-components-button-secondary-border-active)]
+      text-[var(--color-components-button-secondary-text)]
+      hover:text-[var(--color-components-button-secondary-text-hover)]
+      active:text-[var(--color-components-button-secondary-text-active)];
   }
 
   .btn-secondary.btn-disabled {
-    @apply 
-    bg-components-button-secondary-bg-disabled 
-    border-components-button-secondary-border-disabled 
-    text-components-button-secondary-text-disabled;
+    @apply bg-[var(--color-components-button-secondary-bg-disabled)]
+      border-[var(--color-components-button-secondary-border-disabled)]
+      text-[var(--color-components-button-secondary-text-disabled)];
   }
 
   .btn-secondary.btn-destructive {
-    @apply 
-    bg-components-button-destructive-secondary-bg 
-    border-components-button-destructive-secondary-border 
-    hover:bg-components-button-destructive-secondary-bg-hover 
-    hover:border-components-button-destructive-secondary-border-hover 
-    text-components-button-destructive-secondary-text;
+    @apply bg-[var(--color-components-button-destructive-secondary-bg)]
+      border-[var(--color-components-button-destructive-secondary-border)]
+      hover:bg-[var(--color-components-button-destructive-secondary-bg-hover)]
+      active:bg-[var(--color-components-button-destructive-secondary-bg-active)]
+      hover:border-[var(--color-components-button-destructive-secondary-border-hover)]
+      active:border-[var(--color-components-button-destructive-secondary-border-active)]
+      text-[var(--color-components-button-destructive-secondary-text)]
+      hover:text-[var(--color-components-button-destructive-secondary-text-hover)]
+      active:text-[var(--color-components-button-destructive-secondary-text-active)];
   }
 
   .btn-secondary.btn-destructive.btn-disabled {
-    @apply 
-    bg-components-button-destructive-secondary-bg-disabled 
-    border-components-button-destructive-secondary-border-disabled 
-    text-components-button-destructive-secondary-text-disabled;
+    @apply bg-[var(--color-components-button-destructive-secondary-bg-disabled)]
+      border-[var(--color-components-button-destructive-secondary-border-disabled)]
+      text-[var(--color-components-button-destructive-secondary-text-disabled)];
   }
 
-  
   .btn-secondary-accent {
-    @apply 
-    border
-    shadow-none
-    bg-components-button-secondary-bg 
-    border-components-button-secondary-border 
-    hover:bg-components-button-secondary-bg-hover 
-    hover:border-components-button-secondary-border-hover 
-    text-components-button-secondary-accent-text;
+    @apply border
+      shadow-none
+      bg-[var(--color-components-button-secondary-bg)]
+      border-[var(--color-components-button-secondary-border)]
+      text-[var(--color-components-button-secondary-accent-text)]
+      hover:bg-[var(--color-components-button-secondary-bg-hover)]
+      hover:border-[var(--color-components-button-secondary-border-hover)]
+      hover:text-[var(--color-components-button-secondary-accent-text-hover)]
+      active:bg-[var(--color-components-button-secondary-bg-active)]
+      active:border-[var(--color-components-button-secondary-border-active)]
+      active:text-[var(--color-components-button-secondary-accent-text-active)];
   }
 
   .btn-secondary-accent.btn-disabled {
-    @apply 
-    bg-components-button-secondary-bg-disabled 
-    border-components-button-secondary-border-disabled 
-    text-components-button-secondary-accent-text-disabled;
+    @apply bg-[var(--color-components-button-secondary-bg-disabled)]
+      border-[var(--color-components-button-secondary-border-disabled)]
+      text-[var(--color-components-button-secondary-accent-text-disabled)];
   }
 
   .btn-warning {
-    @apply 
-    bg-components-button-destructive-primary-bg 
-    border-components-button-destructive-primary-border 
-    hover:bg-components-button-destructive-primary-bg-hover 
-    hover:border-components-button-destructive-primary-border-hover 
-    text-components-button-destructive-primary-text;
+    @apply bg-[var(--color-components-button-destructive-primary-bg)]
+      border-[var(--color-components-button-destructive-primary-border)]
+      hover:bg-[var(--color-components-button-destructive-primary-bg-hover)]
+      hover:border-[var(--color-components-button-destructive-primary-border-hover)]
+      text-[var(--color-components-button-destructive-primary-text)];
   }
 
   .btn-warning.btn-disabled {
-    @apply 
-    bg-components-button-destructive-primary-bg-disabled 
-    border-components-button-destructive-primary-border-disabled 
-    text-components-button-destructive-primary-text-disabled;
+    @apply bg-[var(--color-components-button-destructive-primary-bg-disabled)]
+      border-[var(--color-components-button-destructive-primary-border-disabled)]
+      text-[var(--color-components-button-destructive-primary-text-disabled)];
   }
 
   .btn-tertiary {
-    @apply 
-    bg-components-button-tertiary-bg 
-    hover:bg-components-button-tertiary-bg-hover 
-    text-components-button-tertiary-text;
+    @apply text-[var(--color-components-button-tertiary-text)]
+      hover:text-[var(--color-components-button-tertiary-text-hover)]
+      active:text-[var(--color-components-button-tertiary-text-active)];
   }
 
   .btn-tertiary.btn-disabled {
-    @apply 
-    bg-components-button-tertiary-bg-disabled 
-    text-components-button-tertiary-text-disabled;
+    @apply bg-[var(--color-components-button-tertiary-bg-disabled)]
+      text-[var(--color-components-button-tertiary-text-disabled)];
   }
 
   .btn-tertiary.btn-destructive {
-    @apply 
-    bg-components-button-destructive-tertiary-bg 
-    hover:bg-components-button-destructive-tertiary-bg-hover 
-    text-components-button-destructive-tertiary-text;
+    @apply text-[var(--color-components-button-destructive-tertiary-text)]
+      hover:text-[var(--color-components-button-destructive-tertiary-text-hover)]
+      active:text-[var(--color-components-button-destructive-tertiary-text-active)];
   }
 
   .btn-tertiary.btn-destructive.btn-disabled {
-    @apply 
-    bg-components-button-destructive-tertiary-bg-disabled 
-    text-components-button-destructive-tertiary-text-disabled;
+    @apply bg-[var(--color-components-button-destructive-tertiary-bg-disabled)]
+      text-[var(--color-components-button-destructive-tertiary-text-disabled)];
   }
 
   .btn-ghost {
-    @apply 
-    hover:bg-components-button-ghost-bg-hover 
-    text-components-button-ghost-text;
+    @apply text-[var(--color-components-button-ghost-text)]
+      bg-[var(--color-components-button-ghost-bg)]
+      hover:text-[var(--color-components-button-ghost-text-hover)]
+      hover:bg-[var(--color-components-button-ghost-bg-hover)]
+      active:text-[var(--color-components-button-ghost-text-active)]
+      active:bg-[var(--color-components-button-ghost-bg-active)];
   }
 
   .btn-ghost.btn-disabled {
-    @apply 
-    text-components-button-ghost-text-disabled;
+    @apply text-[var(--color-components-button-ghost-text-disabled)];
   }
 
   .btn-ghost.btn-destructive {
-    @apply 
-    hover:bg-components-button-destructive-ghost-bg-hover 
-    text-components-button-destructive-ghost-text;
+    @apply text-[var(--color-components-button-destructive-ghost-text)]
+      bg-[var(--color-components-button-destructive-ghost-bg)]
+      hover:text-[var(--color-components-button-destructive-ghost-text-hover)]
+      hover:bg-[var(--color-components-button-destructive-ghost-bg-hover)]
+      active:text-[var(--color-components-button-destructive-ghost-text-active)]
+      active:bg-[var(--color-components-button-destructive-ghost-bg-active)];
   }
 
   .btn-ghost.btn-destructive.btn-disabled {
-    @apply 
-    text-components-button-destructive-ghost-text-disabled;
+    @apply text-[var(--color-components-button-destructive-ghost-text-disabled)];
   }
 
   .btn-ghost-accent {
-    @apply 
-    hover:bg-state-accent-hover
-    text-components-button-secondary-accent-text;
+    @apply text-[var(--color-components-button-ghost-accent-text)]
+      bg-[var(--color-components-button-ghost-accent-bg)]
+      hover:text-[var(--color-components-button-ghost-accent-text-hover)]
+      hover:bg-[var(--color-components-button-ghost-accent-bg-hover)]
+      active:text-[var(--color-components-button-ghost-accent-text-active)]
+      active:bg-[var(--color-components-button-ghost-accent-bg-active)];
   }
 
   .btn-ghost-accent.btn-disabled {
-    @apply 
-    text-components-button-secondary-accent-text-disabled;
+    @apply text-[var(--color-components-button-secondary-accent-text-disabled)];
   }
 
   .btn-large.btn-icon {
@@ -232,21 +247,24 @@
   .btn-small.btn-rounded {
     @apply rounded-[4px];
   }
+  .btn.btn-icon-rotate .a-icon {
+    transition: transform 0.3s ease-out;
+  }
+  .btn.btn-icon-rotate:hover .a-icon {
+    transform: rotate(180deg);
+  }
 
   .btn .a-icon--btn path {
-    transition: fill .3s ease-out;
-
+    transition: fill 0.3s ease-out;
   }
   /*ghost-btn-icons*/
   .btn-ghost .a-icon--btn path {
     fill: var(--color-basic-gray-500);
   }
-
   .btn-ghost:hover .a-icon--btn path {
     fill: var(--color-basic-gray-800);
   }
-  .btn-ghost.btn-disabled:hover .a-icon--btn path,
-  .btn-ghost.btn-disabled .a-icon--btn path{
+  .btn-ghost:disabled .a-icon--btn path {
     fill: var(--color-basic-gray-200);
   }
   /*ghost-destructive-btn-icons*/
@@ -257,32 +275,40 @@
   .btn-ghost.btn-destructive:hover .a-icon--btn path {
     fill: var(--color-basic-red-500);
   }
-  .btn-ghost.btn-destructive.btn-disabled:hover .a-icon--btn path,
-  .btn-ghost.btn-destructive.btn-disabled .a-icon--btn path{
+  .btn-ghost.btn-destructive:disabled .a-icon--btn path {
     fill: var(--color-basic-red-200);
   }
-   /*tetriary-btn-icons*/
-   .btn-tetriary .a-icon--btn path {
+  /*ghost-accent-btn-icons*/
+  .btn-ghost-accent .a-icon--btn path {
+    fill: var(--color-basic-primary-400);
+  }
+
+  .btn-ghost-accent:hover .a-icon--btn path {
+    fill: var(--color-basic-primary-500);
+  }
+  .btn-ghost-accent:disabled .a-icon--btn path {
+    fill: var(--color-basic-primary-200);
+  }
+  /*tertiary-btn-icons*/
+  .btn-tertiary .a-icon--btn path {
     fill: var(--color-basic-gray-500);
   }
 
-  .btn-tetriary:hover .a-icon--btn path {
+  .btn-tertiary:hover .a-icon--btn path {
     fill: var(--color-basic-gray-800);
   }
-  .btn-tetriary.btn-disabled:hover .a-icon--btn path,
-  .btn-tetriary.btn-disabled .a-icon--btn path{
+  .btn-tertiary:disabled .a-icon--btn path {
     fill: var(--color-basic-gray-200);
   }
-  /*tetriary-destructive-btn-icons*/
-  .btn-tetriary.btn-destructive .a-icon--btn path {
+  /*tertiary-destructive-btn-icons*/
+  .btn-tertiary.btn-destructive .a-icon--btn path {
     fill: var(--color-basic-red-400);
   }
 
-  .btn-tetriary.btn-destructive:hover .a-icon--btn path {
+  .btn-tertiary.btn-destructive:hover .a-icon--btn path {
     fill: var(--color-basic-red-500);
   }
-  .btn-tetriary.btn-destructive.btn-disabled:hover .a-icon--btn path,
-  .btn-tetriary.btn-destructive.btn-disabled .a-icon--btn path{
+  .btn-tertiary.btn-destructive:disabled .a-icon--btn path {
     fill: var(--color-basic-red-200);
   }
   /*primary-btn-icons*/
@@ -293,20 +319,18 @@
   .btn-primary:hover .a-icon--btn path {
     fill: var(--color-basic-white);
   }
-  .btn-primary.btn-disabled:hover .a-icon--btn path,
-  .btn-primary.btn-disabled .a-icon--btn path{
+  .btn-primary:disabled .a-icon--btn path {
     fill: var(--color-basic-primary-100);
   }
-   /*secondary-btn-icons*/
-   .btn-secondary .a-icon--btn path {
+  /*secondary-btn-icons*/
+  .btn-secondary .a-icon--btn path {
     fill: var(--color-basic-gray-700);
   }
 
   .btn-secondary:hover .a-icon--btn path {
     fill: var(--color-basic-black);
   }
-  .btn-secondary.btn-disabled:hover .a-icon--btn path
-  .btn-secondary.btn-disabled .a-icon--btn path {
+  .btn-secondary:disabled .a-icon--btn path {
     fill: var(--color-basic-gray-200);
   }
   /*secondary-btn-accent-icons*/
@@ -317,21 +341,17 @@
   .btn-secondary-accent:hover .a-icon--btn path {
     fill: var(--color-basic-primary-500);
   }
-  .btn-secondary-accent.btn-disabled .a-icon--btn path,
-  .btn-secondary-accent.btn-disabled:hover .a-icon--btn path {
+  .btn-secondary-accent:disabled .a-icon--btn path {
     fill: var(--color-basic-primary-100);
   }
   /*secondary destructive*/
-  .btn-secondary.btn-destructive .a-icon--btn path{
+  .btn-secondary.btn-destructive .a-icon--btn path {
     fill: var(--color-basic-red-400);
   }
-  .btn-secondary.btn-destructive:hover .a-icon--btn path{
+  .btn-secondary.btn-destructive:hover .a-icon--btn path {
     fill: var(--color-basic-red-500);
   }
-  .btn-secondary.btn-destructive.btn-disabled .a-icon--btn path,
-  .btn-secondary.btn-destructive.btn-disabled:hover .a-icon--btn path{
+  .btn-secondary.btn-destructive:disabled .a-icon--btn path {
     fill: var(--color-basic-red-200);
   }
-  
 }
-

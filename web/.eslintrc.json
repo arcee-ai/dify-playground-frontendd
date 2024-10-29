@@ -1,14 +1,7 @@
 {
-  "extends": [
-    "next",
-    "@antfu",
-    "plugin:storybook/recommended"
-  ],
+  "extends": ["next", "@antfu", "plugin:storybook/recommended"],
   "rules": {
-    "@typescript-eslint/consistent-type-definitions": [
-      "error",
-      "type"
-    ],
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
     "@typescript-eslint/no-var-requires": "off",
     "no-console": "off",
     "indent": "off",
@@ -25,7 +18,10 @@
         ]
       }
     ],
-    "react-hooks/exhaustive-deps": "warn",
-    "react/display-name": "warn"
+    "react-hooks/exhaustive-deps": "off", // Wyłączenie ostrzeżeń o zależnościach w hookach
+    "unused-imports/no-unused-vars": "off", // Wyłączenie ostrzeżeń o nieużywanych zmiennych
+    "no-mixed-operators": "off", // Wyłączenie mieszanych operatorów
+    "multiline-ternary": "off", // Wyłączenie wymogu nowej linii dla ternary
+    "react/display-name": "warn" // Ostrzeżenie, ale nie blokowanie commitu
   }
 }

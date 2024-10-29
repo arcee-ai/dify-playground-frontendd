@@ -1,16 +1,16 @@
 html[data-theme="light"] {
   --color-components-input-bg-normal: var(--color-basic-gray-50);
   --color-components-input-text-placeholder: var(--color-basic-gray-400);
-  --color-components-input-bg-hover: var(--color-basic-gray-100);
-  --color-components-input-bg-active: var(--color-basic-gray-200);
-  --color-components-input-border-active: var(--color-basic-gray-600);
+  --color-components-input-bg-hover: var(--color-basic-gray-50);
+  --color-components-input-bg-active: var(--color-basic-gray-50);
+  --color-components-input-border-active: var(--color-basic-gray-900);
   --color-components-input-border-destructive: var(--color-basic-red-400);
   --color-components-input-text-filled: var(--color-basic-black);
   --color-components-input-bg-destructive: var(--color-basic-gray-50);
   --color-components-input-bg-disabled: var(--color-basic-gray-100);
   --color-components-input-text-disabled: var(--color-basic-gray-300);
-  --color-components-input-text-filled-disabled: var(--color-basic-gray-500);
-  --color-components-input-border-hover: var(--color-basic-gray-200);
+  --color-components-input-text-filled-disabled: var(--color-basic-gray-400);
+  --color-components-input-border-hover: var(--color-basic-gray-300);
   --color-components-input-border-active-prompt-1: var(--color-basic-blue-500);
   --color-components-input-border-active-prompt-2: var(--color-basic-blue-600);
 
@@ -21,37 +21,43 @@ html[data-theme="light"] {
 
   --color-components-button-primary-text: var(--color-basic-white);
   --color-components-button-primary-bg: var(--color-basic-primary-500);
-  --color-components-button-primary-border: #1018280a;
+  --color-components-button-primary-border: var(--color-basic-trans);
   --color-components-button-primary-bg-hover: var(--color-basic-primary-600);
-  --color-components-button-primary-border-hover: #10182814;
-  --color-components-button-primary-bg-disabled: var(--color-basic-primary-300);
-  --color-components-button-primary-border-disabled: #ffffff00;
+  --color-components-button-primary-bg-active: var(--color-basic-primary-700);
+  --color-components-button-primary-bg-disabled: var(--color-basic-primary-100);
   --color-components-button-primary-text-disabled: var(--color-basic-white);
 
   --color-components-button-secondary-text: var(--color-basic-black);
   --color-components-button-secondary-text-disabled: var(
     --color-basic-gray-200
   );
-  --color-components-button-secondary-bg: #ffffff00;
-  --color-components-button-secondary-bg-hover: var(
+  --color-components-button-secondary-bg: var(--color-basic-trans);
+  --color-components-button-secondary-bg-hover: var(--color-basic-darktrans-50);
+  --color-components-button-secondary-bg-active: var(
     --color-basic-darktrans-100
   );
-  --color-components-button-secondary-bg-disabled: #ffffff00;
+  --color-components-button-secondary-bg-disabled: var(--color-basic-trans);
   --color-components-button-secondary-border: var(--color-basic-gray-500);
-  --color-components-button-secondary-border-hover: var(--color-basic-gray-700);
+  --color-components-button-secondary-border-hover: var(--color-basic-gray-900);
   --color-components-button-secondary-border-disabled: var(
     --color-basic-gray-200
   );
 
-  --color-components-button-tertiary-text: var(--color-basic-gray-600);
+  --color-components-button-tertiary-text: var(--color-basic-gray-500);
+  --color-components-button-tertiary-text-hover: var(--color-basic-gray-800);
+  --color-components-button-tertiary-text-active: var(--color-basic-black);
   --color-components-button-tertiary-text-disabled: var(--color-basic-gray-200);
-  --color-components-button-tertiary-bg: #ffffff00;
-  --color-components-button-tertiary-bg-hover: var(--color-basic-darktrans-50);
-  --color-components-button-tertiary-bg-disabled: #ffffff00;
+  --color-components-button-tertiary-bg: var(--color-basic-trans);
+  --color-components-button-tertiary-bg-hover: var(--color-basic-trans);
+  --color-components-button-tertiary-bg-disabled: var(--color-basic-trans);
 
-  --color-components-button-ghost-text: var(--color-basic-gray-600);
+  --color-components-button-ghost-text: var(--color-basic-gray-500);
+  --color-components-button-ghost-text-hover: var(--color-basic-gray-800);
+  --color-components-button-ghost-text-active: var(--color-basic-black);
   --color-components-button-ghost-text-disabled: var(--color-basic-gray-200);
-  --color-components-button-ghost-bg-hover: var(--color-basic-darktrans-100);
+  --color-components-button-ghost-bg: var(--color-basic-trans);
+  --color-components-button-ghost-bg-hover: var(--color-basic-darktrans-50);
+  --color-components-button-ghost-bg-active: var(--color-basic-darktrans-100);
 
   --color-components-button-destructive-primary-text: var(--color-basic-white);
   --color-components-button-destructive-primary-text-disabled: var(
@@ -61,17 +67,11 @@ html[data-theme="light"] {
   --color-components-button-destructive-primary-bg-hover: var(
     --color-basic-red-600
   );
+  --color-components-button-destructive-primary-bg-active: var(
+    --color-basic-red-700
+  );
   --color-components-button-destructive-primary-bg-disabled: var(
-    --color-basic-red-300
-  );
-  --color-components-button-destructive-primary-border: var(
-    --color-basic-red-400
-  );
-  --color-components-button-destructive-primary-border-hover: var(
-    --color-basic-red-500
-  );
-  --color-components-button-destructive-primary-border-disabled: var(
-    --color-basic-transred-200
+    --color-basic-red-200
   );
 
   --color-components-button-destructive-secondary-text: var(
@@ -80,53 +80,136 @@ html[data-theme="light"] {
   --color-components-button-destructive-secondary-text-disabled: var(
     --color-basic-red-200
   );
+  --color-components-button-destructive-secondary-text: var(
+    --color-basic-red-500
+  );
+  --color-components-button-destructive-secondary-bg-hover: var(
+    --color-basic-red-600
+  );
+  --color-components-button-destructive-secondary-bg-active: var(
+    --color-basic-red-700
+  );
+  --color-components-button-destructive-secondary-bg-disabled: var(
+    --color-basic-red-200
+  );
   --color-components-button-destructive-secondary-bg: var(--color-basic-white);
-  --color-components-button-destructive-secondary-bg-hover: #fef3f2;
-  --color-components-button-destructive-secondary-bg-disabled: #fef3f2;
-  --color-components-button-destructive-secondary-border: #18181b14;
-  --color-components-button-destructive-secondary-border-hover: #f0443840;
-  --color-components-button-destructive-secondary-border-disabled: #f044380a;
+  --color-components-button-destructive-secondary-bg-hover: var(
+    --color-basic-redtrans-50
+  );
+  --color-components-button-destructive-secondary-bg-active: var(
+    --color-basic-redtrans-100
+  );
+  --color-components-button-destructive-secondary-bg-disabled: var(
+    --color-basic-redtrans-100
+  );
+  --color-components-button-destructive-secondary-border: var(
+    --color-basic-red-400
+  );
+  --color-components-button-destructive-secondary-border-hover: var(
+    --color-basic-red-500
+  );
+  --color-components-button-destructive-secondary-border-active: var(
+    --color-basic-red-600
+  );
+  --color-components-button-destructive-secondary-border-disabled: var(
+    --color-basic-red-200
+  );
 
   --color-components-button-destructive-tertiary-text: var(
     --color-basic-red-500
   );
+  --color-components-button-destructive-tertiary-text-hover: var(
+    --color-basic-red-600
+  );
+  --color-components-button-destructive-tertiary-text-active: var(
+    --color-basic-red-700
+  );
   --color-components-button-destructive-tertiary-text-disabled: var(
     --color-basic-red-200
   );
-  --color-components-button-destructive-tertiary-bg: #ffffff00;
-  --color-components-button-destructive-tertiary-bg-hover: var(
-    --color-basic-redtrans-50
-  );
-  --color-components-button-destructive-tertiary-bg-disabled: #ffffff00;
 
-  --color-components-button-destructive-ghost-text: var(
-    --color-basic-redtrans-50
+  --color-components-button-destructive-ghost-text: var(--color-basic-red-500);
+  --color-components-button-destructive-ghost-text-hover: var(
+    --color-basic-red-600
+  );
+  --color-components-button-destructive-ghost-text-active: var(
+    --color-basic-red-700
   );
   --color-components-button-destructive-ghost-text-disabled: var(
     --color-basic-red-200
   );
+  --color-components-button-destructive-ghost-bg: var(--color-basic-trans);
   --color-components-button-destructive-ghost-bg-hover: var(
     --color-basic-redtrans-50
+  );
+  --color-components-button-destructive-ghost-bg-active: var(
+    --color-basic-redtrans-100
+  );
+  --color-components-button-destructive-ghost-bg-disabled: var(
+    --color-basic-trans
   );
 
   --color-components-button-secondary-accent-text: var(
     --color-basic-primary-500
   );
+  --color-components-button-secondary-accent-text-hover: var(
+    --color-basic-primary-600
+  );
+  --color-components-button-secondary-accent-text-active: var(
+    --color-basic-primary-700
+  );
   --color-components-button-secondary-accent-text-disabled: var(
     --color-basic-primary-200
   );
-  --color-components-button-secondary-accent-bg: #ffffff00;
+  --color-components-button-secondary-accent-bg: var(--color-basic-trans);
   --color-components-button-secondary-accent-bg-hover: var(
     --color-basic-primarytrans-50
   );
-  --color-components-button-secondary-accent-bg-disabled: #ffffff00;
+  --color-components-button-secondary-accent-bg-active: var(
+    --color-basic-primarytrans-100
+  );
+  --color-components-button-secondary-accent-bg-disabled: var(
+    --color-basic-trans
+  );
   --color-components-button-secondary-accent-border: var(
     --color-basic-primary-400
   );
   --color-components-button-secondary-accent-border-hover: var(
     --color-basic-primary-500
   );
+  --color-components-button-secondary-accent-border-active: var(
+    --color-basic-primary-600
+  );
   --color-components-button-secondary-accent-border-disabled: var(
+    --color-basic-primary-100
+  );
+
+  --color-components-button-ghost-accent-text: var(--color-basic-primary-500);
+  --color-components-button-ghost-accent-text-hover: var(
+    --color-basic-primary-600
+  );
+  --color-components-button-ghost-accent-text-active: var(
+    --color-basic-primary-700
+  );
+  --color-components-button-ghost-accent-text-disabled: var(
+    --color-basic-primary-200
+  );
+  --color-components-button-ghost-accent-bg: var(--color-basic-trans);
+  --color-components-button-ghost-accent-bg-hover: var(
+    --color-basic-primarytrans-50
+  );
+  --color-components-button-ghost-accent-bg-active: var(
+    --color-basic-primarytrans-100
+  );
+  --color-components-button-ghost-accent-bg-disabled: var(--color-basic-trans);
+  --color-components-button-ghost-accent-border: var(--color-basic-primary-400);
+  --color-components-button-ghost-accent-border-hover: var(
+    --color-basic-primary-500
+  );
+  --color-components-button-ghost-accent-border-active: var(
+    --color-basic-primary-600
+  );
+  --color-components-button-ghost-accent-border-disabled: var(
     --color-basic-primary-100
   );
 
@@ -146,12 +229,12 @@ html[data-theme="light"] {
   --color-components-radio-border-checked-disabled: var(
     --color-basic-primary-200
   );
-  --color-components-radio-bg-disabled: #ffffff00;
+  --color-components-radio-bg-disabled: var(--color-basic-trans);
   --color-components-radio-border: var(--color-basic-gray-300);
   --color-components-radio-border-hover: var(--color-basic-gray-400);
   --color-components-radio-border-disabled: #18181b0a;
-  --color-components-radio-bg: #ffffff00;
-  --color-components-radio-bg-hover: #ffffff00;
+  --color-components-radio-bg: var(--color-basic-trans);
+  --color-components-radio-bg-hover: var(--color-basic-trans);
 
   --color-components-toggle-knob: var(--color-basic-white);
   --color-components-toggle-knob-disabled: #fffffff2;
@@ -185,13 +268,13 @@ html[data-theme="light"] {
   --color-components-panel-on-panel-item-bg-hover: var(--color-basic-gray-100);
   --color-components-panel-on-panel-item-bg-alt: var(--color-basic-gray-50);
 
-  --color-components-panel-bg-transparent: #ffffff00;
+  --color-components-panel-bg-transparent: var(--color-basic-trans);
 
   --color-components-main-nav-nav-button-text: var(--color-basic-gray-600);
   --color-components-main-nav-nav-button-text-active: var(
     --color-basic-primary-400
   );
-  --color-components-main-nav-nav-button-bg: #ffffff00;
+  --color-components-main-nav-nav-button-bg: var(--color-basic-trans);
   --color-components-main-nav-nav-button-bg-active: var(
     --color-basic-primarytrans-50
   );
@@ -334,7 +417,7 @@ html[data-theme="light"] {
   --color-text-primary: var(--color-basic-black);
   --color-text-secondary: var(--color-basic-gray-600);
   --color-text-tertiary: var(--color-basic-gray-400);
-  --color-text-quaternary: #1018284d;
+  --color-text-quaternary: var(--color-basic-darktrans-400);
   --color-text-destructive: var(--color-basic-red-500);
   --color-text-success: var(--color-basic-green-500);
   --color-text-warning: var(--color-basic-yellow-500);
@@ -347,11 +430,11 @@ html[data-theme="light"] {
   --color-text-disabled: var(--color-basic-gray-200);
   --color-text-accent-secondary: var(--color-basic-primary-500);
   --color-text-accent-light-mode-only: var(--color-basic-primary-500);
-  --color-text-text-selected: #155aef24;
-  --color-text-secondary-on-surface: #ffffffe5;
-  --color-text-logo-text: #18222f;
+  --color-text-text-selected: var(--color-basic-bluetrans-100);
+  --color-text-secondary-on-surface: var(--color-basic-white);
+  --color-text-logo-text: var(--color-basic-black);
   --color-text-empty-state-icon: var(--color-basic-secondary-300);
-  --color-text-inverted: #000000;
+  --color-text-inverted: var(--color-basic-black);
 
   --color-background-body: var(--color-basic--white);
   --color-background-default-subtle: var(--color-gray-50);
@@ -369,7 +452,7 @@ html[data-theme="light"] {
   --color-background-gradient-bg-fill-debug-bg-2: var(--color-gray-100);
 
   --color-background-gradient-mask-gray: #c8ceda33;
-  --color-background-gradient-mask-transparent: #ffffff00;
+  --color-background-gradient-mask-transparent: var(--color-basic-trans);
   --color-background-gradient-mask-input-clear-2: #e9ebf000;
   --color-background-gradient-mask-input-clear-1: #e9ebf0;
   --color-background-gradient-mask-transparent-dark: #00000000;
@@ -511,7 +594,7 @@ html[data-theme="light"] {
   --color-state-warning-solid: var(--color-yellow-yellow-500);
 
   --color-effects-highlight: var(--color-basic-white);
-  --color-effects-highlight-lightmode-off: #ffffff00;
+  --color-effects-highlight-lightmode-off: var(--color-basic-trans);
   --color-effects-image-frame: var(--color-basic-white);
 
   --color-util-colors-orange-dark-orange-dark-50: #fff4ed;

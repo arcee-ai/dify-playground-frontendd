@@ -1,8 +1,4 @@
-import {
-  memo,
-  useCallback,
-  useState,
-} from 'react'
+import { memo, useCallback, useState } from 'react'
 import { intersection } from 'lodash-es'
 import type { EdgeProps } from 'reactflow'
 import {
@@ -11,15 +7,9 @@ import {
   Position,
   getBezierPath,
 } from 'reactflow'
-import {
-  useAvailableBlocks,
-  useNodesInteractions,
-} from './hooks'
+import { useAvailableBlocks, useNodesInteractions } from './hooks'
 import BlockSelector from './block-selector'
-import type {
-  Edge,
-  OnSelectBlock,
-} from './types'
+import type { Edge, OnSelectBlock } from './types'
 import { ITERATION_CHILDREN_Z_INDEX } from './constants'
 import cn from '@/utils/classnames'
 
@@ -36,11 +26,7 @@ const CustomEdge = ({
   targetY,
   selected,
 }: EdgeProps) => {
-  const [
-    edgePath,
-    labelX,
-    labelY,
-  ] = getBezierPath({
+  const [edgePath, labelX, labelY] = getBezierPath({
     sourceX: sourceX - 8,
     sourceY,
     sourcePosition: Position.Right,
@@ -51,27 +37,36 @@ const CustomEdge = ({
   })
   const [open, setOpen] = useState(false)
   const { handleNodeAdd } = useNodesInteractions()
-  const { availablePrevBlocks } = useAvailableBlocks((data as Edge['data'])!.targetType, (data as Edge['data'])?.isInIteration)
-  const { availableNextBlocks } = useAvailableBlocks((data as Edge['data'])!.sourceType, (data as Edge['data'])?.isInIteration)
+  const { availablePrevBlocks } = useAvailableBlocks(
+    (data as Edge['data'])!.targetType,
+    (data as Edge['data'])?.isInIteration,
+  )
+  const { availableNextBlocks } = useAvailableBlocks(
+    (data as Edge['data'])!.sourceType,
+    (data as Edge['data'])?.isInIteration,
+  )
 
   const handleOpenChange = useCallback((v: boolean) => {
     setOpen(v)
   }, [])
 
-  const handleInsert = useCallback<OnSelectBlock>((nodeType, toolDefaultValue) => {
-    handleNodeAdd(
-      {
-        nodeType,
-        toolDefaultValue,
-      },
-      {
-        prevNodeId: source,
-        prevNodeSourceHandle: sourceHandleId || 'source',
-        nextNodeId: target,
-        nextNodeTargetHandle: targetHandleId || 'target',
-      },
-    )
-  }, [handleNodeAdd, source, sourceHandleId, target, targetHandleId])
+  const handleInsert = useCallback<OnSelectBlock>(
+    (nodeType, toolDefaultValue) => {
+      handleNodeAdd(
+        {
+          nodeType,
+          toolDefaultValue,
+        },
+        {
+          prevNodeId: source,
+          prevNodeSourceHandle: sourceHandleId || 'source',
+          nextNodeId: target,
+          nextNodeTargetHandle: targetHandleId || 'target',
+        },
+      )
+    },
+    [handleNodeAdd, source, sourceHandleId, target, targetHandleId],
+  )
 
   return (
     <>
@@ -79,7 +74,10 @@ const CustomEdge = ({
         id={id}
         path={edgePath}
         style={{
-          stroke: (selected || data?._connectedNodeIsHovering || data?._run) ? '#2970FF' : '#D0D5DD',
+          stroke:
+            selected || data?._connectedNodeIsHovering || data?._run
+              ? 'var(--color-basic-primary-500)'
+              : 'var(--color-basic-gray-300)',
           strokeWidth: 2,
         }}
       />
@@ -102,7 +100,10 @@ const CustomEdge = ({
             onOpenChange={handleOpenChange}
             asChild
             onSelect={handleInsert}
-            availableBlocksTypes={intersection(availablePrevBlocks, availableNextBlocks)}
+            availableBlocksTypes={intersection(
+              availablePrevBlocks,
+              availableNextBlocks,
+            )}
             triggerClassName={() => 'hover:scale-150 transition-all'}
           />
         </div>

@@ -1,21 +1,11 @@
 import type { FC } from 'react'
-import {
-  memo,
-  useCallback,
-  useMemo,
-} from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import { RiApps2AddLine } from '@remixicon/react'
 import { useNodes } from 'reactflow'
 import { useTranslation } from 'react-i18next'
 import { useContext } from 'use-context-selector'
-import {
-  useStore,
-  useWorkflowStore,
-} from '../store'
-import {
-  BlockEnum,
-  InputVarType,
-} from '../types'
+import { useStore, useWorkflowStore } from '../store'
+import { BlockEnum, InputVarType } from '../types'
 import type { StartNodeType } from '../nodes/start/types'
 import {
   useChecklistBeforePublish,
@@ -27,12 +17,12 @@ import {
 } from '../hooks'
 import AppPublisher from '../../app/app-publisher'
 import { ToastContext } from '../../base/toast'
+import Aicon from '../../base/a-icon'
 import RunAndHistory from './run-and-history'
 import EditingTitle from './editing-title'
 import RunningTitle from './running-title'
 import RestoringTitle from './restoring-title'
 import ViewHistory from './view-history'
-import ChatVariableButton from './chat-variable-button'
 import EnvButton from './env-button'
 import Button from '@/app/components/base/button'
 import { useStore as useAppStore } from '@/app/components/app/store'
@@ -44,7 +34,6 @@ const Header: FC = () => {
   const { t } = useTranslation()
   const workflowStore = useWorkflowStore()
   const appDetail = useAppStore(s => s.appDetail)
-  const appSidebarExpand = useAppStore(s => s.appSidebarExpand)
   const appID = appDetail?.id
   const isChatMode = useIsChatMode()
   const { nodesReadOnly, getNodesReadOnly } = useNodesReadOnly()
@@ -55,6 +44,7 @@ const Header: FC = () => {
   const startNode = nodes.find(node => node.data.type === BlockEnum.Start)
   const startVariables = startNode?.data.variables
   const fileSettings = useFeatures(s => s.features.file)
+  // const showFeaturesPanel = workflowStore.getState().showFeaturesPanel;
   const variables = useMemo(() => {
     const data = startVariables || []
     if (fileSettings?.image?.enabled) {
@@ -80,18 +70,11 @@ const Header: FC = () => {
   const { handleCheckBeforePublish } = useChecklistBeforePublish()
   const { handleSyncWorkflowDraft } = useNodesSyncDraft()
   const { notify } = useContext(ToastContext)
-  const {
-    normal,
-    restoring,
-    viewHistory,
-  } = useWorkflowMode()
+  const { normal, restoring, viewHistory } = useWorkflowMode()
 
   const handleShowFeatures = useCallback(() => {
-    const {
-      showFeaturesPanel,
-      isRestoring,
-      setShowFeaturesPanel,
-    } = workflowStore.getState()
+    const { showFeaturesPanel, isRestoring, setShowFeaturesPanel }
+      = workflowStore.getState()
     if (getNodesReadOnly() && !isRestoring)
       return
     setShowFeaturesPanel(!showFeaturesPanel)
@@ -128,10 +111,13 @@ const Header: FC = () => {
     handleRestoreFromPublishedWorkflow()
   }, [handleBackupDraft, handleRestoreFromPublishedWorkflow, workflowStore])
 
-  const onPublisherToggle = useCallback((state: boolean) => {
-    if (state)
-      handleSyncWorkflowDraft(true)
-  }, [handleSyncWorkflowDraft])
+  const onPublisherToggle = useCallback(
+    (state: boolean) => {
+      if (state)
+        handleSyncWorkflowDraft(true)
+    },
+    [handleSyncWorkflowDraft],
+  )
 
   const handleGoBackToEdit = useCallback(() => {
     handleLoadBackupDraft()
@@ -143,96 +129,76 @@ const Header: FC = () => {
   }, [workflowStore])
 
   return (
-    <div
-      className='absolute top-0 left-0 z-10 flex items-center justify-between w-full px-3 h-14'
-      style={{
-        background: 'linear-gradient(180deg, #F9FAFB 0%, rgba(249, 250, 251, 0.00) 100%)',
-      }}
-    >
-      <div>
-        {
-          appSidebarExpand === 'collapse' && (
-            <div className='text-xs font-medium text-gray-700'>{appDetail?.name}</div>
-          )
-        }
-        {
-          normal && <EditingTitle />
-        }
-        {
-          viewHistory && <RunningTitle />
-        }
-        {
-          restoring && <RestoringTitle />
-        }
+    <div className="absolute top-0 left-0 z-10 pt-2 flex items-start justify-center w-full px-3 h-13">
+      <div className="absolute left-8">
+        {normal && <EditingTitle />}
+        {viewHistory && <RunningTitle />}
+        {restoring && <RestoringTitle />}
       </div>
-      {
-        normal && (
-          <div className='flex items-center gap-2'>
-            {/* <GlobalVariableButton disabled={nodesReadOnly} /> */}
-            {isChatMode && <ChatVariableButton disabled={nodesReadOnly} />}
-            <EnvButton disabled={nodesReadOnly} />
-            <div className='w-[1px] h-3.5 bg-gray-200'></div>
-            <RunAndHistory />
-            <Button className='text-components-button-secondary-text' onClick={handleShowFeatures}>
-              <RiApps2AddLine className='w-4 h-4 mr-1 text-components-button-secondary-text' />
-              {t('workflow.common.features')}
-            </Button>
-            <AppPublisher
-              {...{
-                publishedAt,
-                draftUpdatedAt,
-                disabled: nodesReadOnly,
-                toolPublished,
-                inputs: variables,
-                onRefreshData: handleToolConfigureUpdate,
-                onPublish,
-                onRestore: onStartRestoring,
-                onToggle: onPublisherToggle,
-                crossAxisOffset: 4,
-              }}
-            />
-          </div>
-        )
-      }
-      {
-        viewHistory && (
-          <div className='flex items-center'>
-            <ViewHistory withText />
-            <div className='mx-2 w-[1px] h-3.5 bg-gray-200'></div>
-            <Button
-              variant='primary'
-              className='mr-2'
-              onClick={handleGoBackToEdit}
-            >
-              <ArrowNarrowLeft className='w-4 h-4 mr-1' />
-              {t('workflow.common.goBackToEdit')}
-            </Button>
-          </div>
-        )
-      }
-      {
-        restoring && (
-          <div className='flex items-center'>
-            <Button className='text-components-button-secondary-text' onClick={handleShowFeatures}>
-              <RiApps2AddLine className='w-4 h-4 mr-1 text-components-button-secondary-text' />
-              {t('workflow.common.features')}
-            </Button>
-            <div className='mx-2 w-[1px] h-3.5 bg-gray-200'></div>
-            <Button
-              className='mr-2'
-              onClick={handleCancelRestore}
-            >
-              {t('common.operation.cancel')}
-            </Button>
-            <Button
-              onClick={handleRestore}
-              variant='primary'
-            >
-              {t('workflow.common.restore')}
-            </Button>
-          </div>
-        )
-      }
+      {normal && (
+        <div className="p-1.5 flex items-center gap-2 rounded-full shadow-xl bg-white">
+          {/* <GlobalVariableButton disabled={nodesReadOnly} /> */}
+          {/* isChatMode && <ChatVariableButton disabled={nodesReadOnly} /> */}
+          <EnvButton disabled={nodesReadOnly} />
+          <RunAndHistory />
+          <Button
+            // variant={showFeaturesPanel ? `ghost-accent` : `ghost`}
+            variant="ghost"
+            size="medium"
+            onClick={handleShowFeatures}
+            className="btn-icon"
+          >
+            <Aicon size={20} icon="icon-features" className="a-icon--btn" />
+            <span>{t('workflow.common.features')}</span>
+          </Button>
+          <AppPublisher
+            {...{
+              publishedAt,
+              draftUpdatedAt,
+              disabled: nodesReadOnly,
+              toolPublished,
+              inputs: variables,
+              onRefreshData: handleToolConfigureUpdate,
+              onPublish,
+              onRestore: onStartRestoring,
+              onToggle: onPublisherToggle,
+              crossAxisOffset: 4,
+            }}
+          />
+        </div>
+      )}
+      {viewHistory && (
+        <div className="flex items-center">
+          <ViewHistory withText />
+          <div className="mx-2 w-[1px] h-3.5 bg-gray-200"></div>
+          <Button
+            variant="primary"
+            className="mr-2"
+            onClick={handleGoBackToEdit}
+          >
+            <ArrowNarrowLeft className="w-4 h-4 mr-1" />
+            {t('workflow.common.goBackToEdit')}
+          </Button>
+        </div>
+      )}
+      {restoring && (
+        <div className="flex items-center">
+          <Button
+            className="text-components-button-secondary-text"
+            onClick={handleShowFeatures}
+          >
+            <RiApps2AddLine className="w-4 h-4 mr-1 text-components-button-secondary-text" />
+            {t('workflow.common.features')}
+          </Button>
+          <div className="mx-2 w-[1px] h-3.5 bg-gray-200"></div>
+          <Button className="mr-2" onClick={handleCancelRestore}>
+            {t('common.operation.cancel')}
+          </Button>
+          <Button onClick={handleRestore} variant="primary">
+            {t('workflow.common.restore')}
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

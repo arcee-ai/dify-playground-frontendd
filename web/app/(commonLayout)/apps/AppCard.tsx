@@ -280,7 +280,7 @@ const AppCard = ({ app, onRefresh }: AppCardProps) => {
           e.preventDefault()
           getRedirection(isCurrentWorkspaceEditor, app, push)
         }}
-        className="relative group col-span-1 bg-gray-50 border-1 border-solid border-transparent rounded-2xl flex flex-col transition-all duration-300 ease-in-out cursor-pointer hover:bg-gray-100 hover:border-gray-200"
+        className="fade relative group col-span-1 bg-gray-50 rounded-[16px] flex flex-col transition-all duration-300 ease-out cursor-pointer hover:bg-gray-100 active:bg-gray-200"
       >
         <div className="flex pt-[14px] px-[14px] pb-3 h-[66px] items-center gap-3 grow-0 shrink-0">
           <div className="relative shrink-0">

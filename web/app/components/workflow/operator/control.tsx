@@ -1,27 +1,19 @@
 import type { MouseEvent } from 'react'
-import {
-  memo,
-} from 'react'
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  RiCursorLine,
-  RiFunctionAddLine,
-  RiHand,
-  RiStickyNoteAddLine,
-} from '@remixicon/react'
+
 import {
   useNodesReadOnly,
   useWorkflowMoveMode,
   useWorkflowOrganize,
 } from '../hooks'
-import {
-  ControlMode,
-} from '../types'
+import { ControlMode } from '../types'
 import { useStore } from '../store'
+import Button from '../../base/button'
+import Aicon from '../../base/a-icon'
 import AddBlock from './add-block'
 import TipPopup from './tip-popup'
 import { useOperator } from './hooks'
-import cn from '@/utils/classnames'
 
 const Control = () => {
   const { t } = useTranslation()
@@ -29,10 +21,7 @@ const Control = () => {
   const { handleModePointer, handleModeHand } = useWorkflowMoveMode()
   const { handleLayout } = useWorkflowOrganize()
   const { handleAddNote } = useOperator()
-  const {
-    nodesReadOnly,
-    getNodesReadOnly,
-  } = useNodesReadOnly()
+  const { nodesReadOnly, getNodesReadOnly } = useNodesReadOnly()
 
   const addNote = (e: MouseEvent<HTMLDivElement>) => {
     if (getNodesReadOnly())
@@ -43,55 +32,59 @@ const Control = () => {
   }
 
   return (
-    <div className='flex items-center p-0.5 rounded-lg border-[0.5px] border-gray-100 bg-white shadow-lg text-gray-500'>
+    <div className="flex items-center p-1 rounded-full bg-white shadow-lg text-gray-500">
       <AddBlock />
       <TipPopup title={t('workflow.nodes.note.addNote')}>
-        <div
-          className={cn(
-            'flex items-center justify-center ml-[1px] w-8 h-8 rounded-lg hover:bg-black/5 hover:text-gray-700 cursor-pointer',
-            `${nodesReadOnly && '!cursor-not-allowed opacity-50'}`,
-          )}
-          onClick={addNote}
-        >
-          <RiStickyNoteAddLine className='w-4 h-4' />
+        <div onClick={addNote}>
+          <Button
+            variant="ghost"
+            size="medium"
+            className="btn-icon"
+            disabled={nodesReadOnly}
+          >
+            <Aicon size={20} icon="icon-add-note" className="a-icon--btn" />
+          </Button>
         </div>
       </TipPopup>
-      <div className='mx-[3px] w-[1px] h-3.5 bg-gray-200'></div>
+      <div className="mx-1 w-[1px] h-3.5 bg-gray-200"></div>
       <TipPopup title={t('workflow.common.pointerMode')} shortcuts={['v']}>
-        <div
-          className={cn(
-            'flex items-center justify-center mr-[1px] w-8 h-8 rounded-lg cursor-pointer',
-            controlMode === ControlMode.Pointer ? 'bg-primary-50 text-primary-600' : 'hover:bg-black/5 hover:text-gray-700',
-            `${nodesReadOnly && '!cursor-not-allowed opacity-50'}`,
-          )}
+        <Button
+          variant={
+            controlMode === ControlMode.Pointer ? 'ghost-accent' : 'ghost'
+          }
+          size="medium"
+          className="btn-icon"
+          disabled={nodesReadOnly}
           onClick={handleModePointer}
         >
-          <RiCursorLine className='w-4 h-4' />
-        </div>
+          <Aicon size={20} icon="icon-coursor" className="a-icon--btn" />
+        </Button>
       </TipPopup>
       <TipPopup title={t('workflow.common.handMode')} shortcuts={['h']}>
-        <div
-          className={cn(
-            'flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer',
-            controlMode === ControlMode.Hand ? 'bg-primary-50 text-primary-600' : 'hover:bg-black/5 hover:text-gray-700',
-            `${nodesReadOnly && '!cursor-not-allowed opacity-50'}`,
-          )}
+        <Button
+          variant={controlMode === ControlMode.Hand ? 'ghost-accent' : 'ghost'}
+          size="medium"
+          className="btn-icon"
+          disabled={nodesReadOnly}
           onClick={handleModeHand}
         >
-          <RiHand className='w-4 h-4' />
-        </div>
+          <Aicon size={20} icon="icon-hand" className="a-icon--btn" />
+        </Button>
       </TipPopup>
-      <div className='mx-[3px] w-[1px] h-3.5 bg-gray-200'></div>
-      <TipPopup title={t('workflow.panel.organizeBlocks')} shortcuts={['ctrl', 'o']}>
-        <div
-          className={cn(
-            'flex items-center justify-center w-8 h-8 rounded-lg hover:bg-black/5 hover:text-gray-700 cursor-pointer',
-            `${nodesReadOnly && '!cursor-not-allowed opacity-50'}`,
-          )}
+      <div className="mx-1 w-[1px] h-3.5 bg-gray-200"></div>
+      <TipPopup
+        title={t('workflow.panel.organizeBlocks')}
+        shortcuts={['ctrl', 'o']}
+      >
+        <Button
+          variant="ghost"
+          size="medium"
+          className="btn-icon"
+          disabled={nodesReadOnly}
           onClick={handleLayout}
         >
-          <RiFunctionAddLine className='w-4 h-4' />
-        </div>
+          <Aicon size={20} icon="icon-organize" className="a-icon--btn" />
+        </Button>
       </TipPopup>
     </div>
   )

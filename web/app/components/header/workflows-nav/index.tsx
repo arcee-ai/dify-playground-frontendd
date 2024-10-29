@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import produce from 'immer'
 import useSWRInfinite from 'swr/infinite'
@@ -51,19 +51,40 @@ const WorkflowsNav = () => {
   )
   const isSingleApp = content === 'Single app' && appDetail
 
+  // Ref do kliknięcia poza elementem
+  const menuRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     // Ustawianie content na podstawie URL
     if (currentPath === '/apps')
       setContent('All')
     else if (currentPath.startsWith('/app/') && appDetail)
       setContent('Single app')
-    else
-      setContent('Other')
+    else setContent('Other')
   }, [currentPath, appDetail])
 
   const toggleOpen = () => {
     setIsOpen(!isOpen)
   }
+
+  // Obsługa kliknięcia poza elementem
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node))
+        setIsOpen(false)
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
+  // Zamknięcie menu po zmianie URL
+  useEffect(() => {
+    setIsOpen(false)
+  }, [currentPath])
+
   useEffect(() => {
     if (appsData) {
       const appItems = flatten(appsData?.map(appData => appData.data))
@@ -99,7 +120,7 @@ const WorkflowsNav = () => {
   }, [appDetail, navItems])
 
   return (
-    <div className="relative">
+    <div className="relative" ref={menuRef}>
       <Button
         onClick={toggleOpen}
         variant="ghost"
@@ -108,28 +129,24 @@ const WorkflowsNav = () => {
       >
         <div className="text-base leading-5 overflow-ellipsis w-full font-normal text-black">
           <div className="flex items-center gap-2">
-            {content === 'All'
-              ? (
-                <span>{content}</span>
-              )
-              : isSingleApp
-                ? (
-                  <>
-                    <AppIcon
-                      size="small"
-                      iconType={appDetail.icon_type}
-                      icon={appDetail.icon}
-                      background={appDetail.icon_background}
-                      imageUrl={appDetail.icon_url}
-                    />
-                    <span className="text-base leading-5 overflow-ellipsis w-full font-normal text-black">
-                      {appDetail.name}
-                    </span>
-                  </>
-                )
-                : (
-                  <span>{content}</span>
-                )}
+            {content === 'All' ? (
+              <span>{content}</span>
+            ) : isSingleApp ? (
+              <>
+                <AppIcon
+                  size="small"
+                  iconType={appDetail.icon_type}
+                  icon={appDetail.icon}
+                  background={appDetail.icon_background}
+                  imageUrl={appDetail.icon_url}
+                />
+                <span className="text-base leading-5 overflow-ellipsis w-full font-normal text-black">
+                  {appDetail.name}
+                </span>
+              </>
+            ) : (
+              <span>{content}</span>
+            )}
             <Aicon
               className={`a-icon--btn min-w-[20px] transition-transform duration-300 ease-out ${
                 isOpen ? 'rotate-180' : ''
@@ -141,7 +158,7 @@ const WorkflowsNav = () => {
         </div>
       </Button>
       {isOpen && (
-        <div className="border flex flex-col items-start gap-3 max-w-[340px] w-[340px] border-gray-200 rounded-lg px-3 shadow-lg pt-3 pb-4 bg-white absolute top-13 left-0">
+        <div className="fade-up-8 border flex flex-col items-start gap-3 max-w-[340px] w-[340px] border-gray-200 rounded-lg px-3 shadow-lg pt-3 pb-4 bg-white absolute top-13 left-0">
           {navItems.map(appItem => (
             <HeaderAppItem key={appItem.id} app={appItem} />
           ))}

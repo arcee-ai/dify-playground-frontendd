@@ -46,10 +46,9 @@ const Header = () => {
 
   useEffect(() => {
     hideNavMenu()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSegment])
   return (
-    <div className="flex flex-1 items-center justify-between px-4">
+    <div className="flex flex-1 items-center justify-between px-4 py-2">
       <div className="flex items-center gap-2">
         <Button
           variant="ghost"
