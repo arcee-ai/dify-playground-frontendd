@@ -1,13 +1,6 @@
 import type { FC } from 'react'
-import {
-  memo,
-  useCallback,
-  useState,
-} from 'react'
+import { memo, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  RiPlayLargeLine,
-} from '@remixicon/react'
 import {
   useNodeDataUpdate,
   useNodesInteractions,
@@ -16,16 +9,12 @@ import {
 import type { Node } from '../../../types'
 import { canRunBySingle } from '../../../utils'
 import PanelOperator from './panel-operator'
-import {
-  Stop,
-} from '@/app/components/base/icons/src/vender/line/mediaAndDevices'
 import Tooltip from '@/app/components/base/tooltip'
+import Button from '@/app/components/base/button'
+import Aicon from '@/app/components/base/a-icon'
 
 type NodeControlProps = Pick<Node, 'id' | 'data'>
-const NodeControl: FC<NodeControlProps> = ({
-  id,
-  data,
-}) => {
+const NodeControl: FC<NodeControlProps> = ({ id, data }) => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const { handleNodeDataUpdate } = useNodeDataUpdate()
@@ -38,53 +27,50 @@ const NodeControl: FC<NodeControlProps> = ({
 
   return (
     <div
-      className={`
-      hidden group-hover:flex pb-1 absolute right-0 -top-7 h-7
+      className={`hidden group-hover:flex pb-1 absolute -right-2 -top-11 
       ${data.selected && '!flex'}
       ${open && '!flex'}
       `}
     >
       <div
-        className='flex items-center px-0.5 h-6 bg-white rounded-lg border-[0.5px] border-gray-100 shadow-xs text-gray-500'
+        className="flex fade scale-75 items-center p-1 bg-white rounded-full border-1 border-gray-100 shadow-lg text-gray-500"
         onClick={e => e.stopPropagation()}
       >
-        {
-          canRunBySingle(data.type) && (
-            <div
-              className='flex items-center justify-center w-5 h-5 rounded-md cursor-pointer hover:bg-black/5'
-              onClick={() => {
-                handleNodeDataUpdate({
-                  id,
-                  data: {
-                    _isSingleRun: !data._isSingleRun,
-                  },
-                })
-                handleNodeSelect(id)
-                if (!data._isSingleRun)
-                  handleSyncWorkflowDraft(true)
-              }}
-            >
-              {
-                data._isSingleRun
-                  ? <Stop className='w-3 h-3' />
-                  : (
-                    <Tooltip
-                      popupContent={t('workflow.panel.runThisStep')}
-                      asChild={false}
-                    >
-                      <RiPlayLargeLine className='w-3 h-3' />
-                    </Tooltip>
-                  )
-              }
-            </div>
-          )
-        }
+        {canRunBySingle(data.type) && (
+          <Button
+            variant={data._isSingleRun ? 'ghost-accent' : 'ghost'}
+            size="medium"
+            className="btn-icon"
+            onClick={() => {
+              handleNodeDataUpdate({
+                id,
+                data: {
+                  _isSingleRun: !data._isSingleRun,
+                },
+              })
+              handleNodeSelect(id)
+              if (!data._isSingleRun)
+                handleSyncWorkflowDraft(true)
+            }}
+          >
+            {!data._isSingleRun ? (
+              <Tooltip
+                popupContent={t('workflow.panel.runThisStep')}
+                asChild={false}
+              >
+                <Aicon size={20} icon="icon-play" className="a-icon--btn" />
+              </Tooltip>
+            ) : (
+              <Aicon size={20} icon="icon-play" className="a-icon--btn" />
+            )}
+          </Button>
+        )}
         <PanelOperator
           id={id}
           data={data}
           offset={0}
           onOpenChange={handleOpenChange}
-          triggerClassName='!w-5 !h-5'
+          triggerClassName=""
         />
       </div>
     </div>

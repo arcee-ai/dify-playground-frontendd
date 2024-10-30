@@ -40,7 +40,7 @@ export default function NavLink({
   const NavIcon = isActive ? iconMap.selected : iconMap.normal
 
   return (
-    <Link
+    /* <Link
       key={name}
       href={href}
       className={classNames(
@@ -55,6 +55,21 @@ export default function NavLink({
           'h-4 w-4 flex-shrink-0',
           mode === 'expand' ? 'mr-2' : 'mr-0',
         )}
+        aria-hidden="true"
+      />
+      {mode === 'expand' && name}
+    </Link> */
+    <Link
+      key={name}
+      href={href}
+      className={classNames(
+        isActive ? ' btn-ghost-accent' : 'btn-ghost',
+        'btn btn-icon-left btn-small',
+      )}
+      title={mode === 'collapse' ? name : ''}
+    >
+      <NavIcon
+        className={classNames('h-4 w-4 a-icon--btn')}
         aria-hidden="true"
       />
       {mode === 'expand' && name}

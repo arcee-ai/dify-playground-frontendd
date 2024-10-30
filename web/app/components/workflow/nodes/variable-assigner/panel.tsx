@@ -9,15 +9,15 @@ import VarGroupItem from './components/var-group-item'
 import cn from '@/utils/classnames'
 import { type NodePanelProps } from '@/app/components/workflow/types'
 import Split from '@/app/components/workflow/nodes/_base/components/split'
-import OutputVars, { VarItem } from '@/app/components/workflow/nodes/_base/components/output-vars'
+import OutputVars, {
+  VarItem,
+} from '@/app/components/workflow/nodes/_base/components/output-vars'
 import Switch from '@/app/components/base/switch'
-import AddButton from '@/app/components/workflow/nodes/_base/components/add-button'
+import Button from '@/app/components/base/button'
+import Aicon from '@/app/components/base/a-icon'
 
 const i18nPrefix = 'workflow.nodes.variableAssigner'
-const Panel: FC<NodePanelProps<VariableAssignerNodeType>> = ({
-  id,
-  data,
-}) => {
+const Panel: FC<NodePanelProps<VariableAssignerNodeType>> = ({ id, data }) => {
   const { t } = useTranslation()
 
   const {
@@ -38,24 +38,28 @@ const Panel: FC<NodePanelProps<VariableAssignerNodeType>> = ({
   } = useConfig(id, data)
 
   return (
-    <div className='mt-2'>
-      <div className='px-4 pb-4 space-y-4'>
-        {!isEnableGroup
-          ? (
-            <VarGroupItem
-              readOnly={readOnly}
-              nodeId={id}
-              payload={{
-                output_type: inputs.output_type,
-                variables: inputs.variables,
-              }}
-              onChange={handleListOrTypeChange}
-              groupEnabled={false}
-              availableVars={getAvailableVars(id, 'target', filterVar(inputs.output_type), true)}
-            />
-          )
-          : (<div>
-            <div className='space-y-2'>
+    <div className="mt-2">
+      <div className="px-4 pb-4 space-y-4">
+        {!isEnableGroup ? (
+          <VarGroupItem
+            readOnly={readOnly}
+            nodeId={id}
+            payload={{
+              output_type: inputs.output_type,
+              variables: inputs.variables,
+            }}
+            onChange={handleListOrTypeChange}
+            groupEnabled={false}
+            availableVars={getAvailableVars(
+              id,
+              'target',
+              filterVar(inputs.output_type),
+              true,
+            )}
+          />
+        ) : (
+          <div>
+            <div className="space-y-2">
               {inputs.advanced_settings?.groups.map((item, index) => (
                 <div key={item.groupId}>
                   <VarGroupItem
@@ -64,22 +68,35 @@ const Panel: FC<NodePanelProps<VariableAssignerNodeType>> = ({
                     payload={item}
                     onChange={handleListOrTypeChangeInGroup(item.groupId)}
                     groupEnabled
-                    canRemove={!readOnly && inputs.advanced_settings?.groups.length > 1}
+                    canRemove={
+                      !readOnly && inputs.advanced_settings?.groups.length > 1
+                    }
                     onRemove={handleGroupRemoved(item.groupId)}
                     onGroupNameChange={handleVarGroupNameChange(item.groupId)}
-                    availableVars={getAvailableVars(id, item.groupId, filterVar(item.output_type), true)}
+                    availableVars={getAvailableVars(
+                      id,
+                      item.groupId,
+                      filterVar(item.output_type),
+                      true,
+                    )}
                   />
-                  {index !== inputs.advanced_settings?.groups.length - 1 && <Split className='my-4' />}
+                  {index !== inputs.advanced_settings?.groups.length - 1 && (
+                    <Split className="my-4" />
+                  )}
                 </div>
-
               ))}
             </div>
-            <AddButton
-              className='mt-2'
-              text={t(`${i18nPrefix}.addGroup`)}
+            <Button
+              variant="ghost"
+              size="medium"
+              className="btn-icon-left btn-rounded mt-4 w-full"
               onClick={handleAddGroup}
-            />
-          </div>)}
+            >
+              <Aicon icon="icon-add" className="a-icon--btn" size={20} />
+              <span>{t(`${i18nPrefix}.addGroup`)}</span>
+            </Button>
+          </div>
+        )}
       </div>
       <Split />
       <div className={cn('px-4 pt-4', isEnableGroup ? 'pb-4' : 'pb-2')}>
@@ -90,7 +107,7 @@ const Panel: FC<NodePanelProps<VariableAssignerNodeType>> = ({
             <Switch
               defaultValue={isEnableGroup}
               onChange={handleGroupEnabledChange}
-              size='md'
+              size="md"
               disabled={readOnly}
             />
           }
@@ -99,7 +116,7 @@ const Panel: FC<NodePanelProps<VariableAssignerNodeType>> = ({
       {isEnableGroup && (
         <>
           <Split />
-          <div className='px-4 pt-4 pb-2'>
+          <div className="px-4 pt-4 pb-2">
             <OutputVars>
               <>
                 {inputs.advanced_settings?.groups.map((item, index) => (

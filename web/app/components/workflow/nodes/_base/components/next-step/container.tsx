@@ -1,9 +1,6 @@
 import Add from './add'
 import Item from './item'
-import type {
-  CommonNodeType,
-  Node,
-} from '@/app/components/workflow/types'
+import type { CommonNodeType, Node } from '@/app/components/workflow/types'
 
 type ContainerProps = {
   nodeId: string
@@ -21,27 +18,23 @@ const Container = ({
   branchName,
 }: ContainerProps) => {
   return (
-    <div className='p-0.5 space-y-0.5 rounded-[10px] bg-background-section-burn'>
-      {
-        branchName && (
-          <div
-            className='flex items-center px-2 system-2xs-semibold-uppercase text-text-tertiary truncate'
-            title={branchName}
-          >
-            {branchName}
-          </div>
-        )
-      }
-      {
-        nextNodes.map(nextNode => (
-          <Item
-            key={nextNode.id}
-            nodeId={nextNode.id}
-            data={nextNode.data}
-            sourceHandle='source'
-          />
-        ))
-      }
+    <div className="p-0.5 space-y-0.5 rounded-[10px] bg-gray-50">
+      {branchName && (
+        <div
+          className="flex items-center px-2 system-2xs-semibold-uppercase text-text-tertiary truncate"
+          title={branchName}
+        >
+          {branchName}
+        </div>
+      )}
+      {nextNodes.map(nextNode => (
+        <Item
+          key={nextNode.id}
+          nodeId={nextNode.id}
+          data={nextNode.data}
+          sourceHandle="source"
+        />
+      ))}
       <Add
         isParallel={!!nextNodes.length}
         nodeId={nodeId}

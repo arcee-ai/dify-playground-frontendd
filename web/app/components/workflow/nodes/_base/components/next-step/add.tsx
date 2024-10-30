@@ -1,12 +1,5 @@
-import {
-  memo,
-  useCallback,
-  useState,
-} from 'react'
+import { memo, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  RiAddLine,
-} from '@remixicon/react'
 import {
   useAvailableBlocks,
   useNodesInteractions,
@@ -18,6 +11,8 @@ import type {
   CommonNodeType,
   OnSelectBlock,
 } from '@/app/components/workflow/types'
+import Button from '@/app/components/base/button'
+import Aicon from '@/app/components/base/a-icon'
 
 type AddProps = {
   nodeId: string
@@ -25,62 +20,63 @@ type AddProps = {
   sourceHandle: string
   isParallel?: boolean
 }
-const Add = ({
-  nodeId,
-  nodeData,
-  sourceHandle,
-  isParallel,
-}: AddProps) => {
+const Add = ({ nodeId, nodeData, sourceHandle, isParallel }: AddProps) => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const { handleNodeAdd } = useNodesInteractions()
   const { nodesReadOnly } = useNodesReadOnly()
-  const { availableNextBlocks } = useAvailableBlocks(nodeData.type, nodeData.isInIteration)
+  const { availableNextBlocks } = useAvailableBlocks(
+    nodeData.type,
+    nodeData.isInIteration,
+  )
   const { checkParallelLimit } = useWorkflow()
 
-  const handleSelect = useCallback<OnSelectBlock>((type, toolDefaultValue) => {
-    handleNodeAdd(
-      {
-        nodeType: type,
-        toolDefaultValue,
-      },
-      {
-        prevNodeId: nodeId,
-        prevNodeSourceHandle: sourceHandle,
-      },
-    )
-  }, [nodeId, sourceHandle, handleNodeAdd])
+  const handleSelect = useCallback<OnSelectBlock>(
+    (type, toolDefaultValue) => {
+      handleNodeAdd(
+        {
+          nodeType: type,
+          toolDefaultValue,
+        },
+        {
+          prevNodeId: nodeId,
+          prevNodeSourceHandle: sourceHandle,
+        },
+      )
+    },
+    [nodeId, sourceHandle, handleNodeAdd],
+  )
 
-  const handleOpenChange = useCallback((newOpen: boolean) => {
-    if (newOpen && !checkParallelLimit(nodeId, sourceHandle))
-      return
+  const handleOpenChange = useCallback(
+    (newOpen: boolean) => {
+      if (newOpen && !checkParallelLimit(nodeId, sourceHandle))
+        return
 
-    setOpen(newOpen)
-  }, [checkParallelLimit, nodeId, sourceHandle])
+      setOpen(newOpen)
+    },
+    [checkParallelLimit, nodeId, sourceHandle],
+  )
 
-  const renderTrigger = useCallback((open: boolean) => {
-    return (
-      <div
-        className={`
-          relative flex items-center px-2 h-9 rounded-lg border border-dashed border-divider-regular bg-dropzone-bg
-          hover:bg-dropzone-bg-hover text-xs text-text-placeholder cursor-pointer
-          ${open && '!bg-components-dropzone-bg-alt'}
-          ${nodesReadOnly && '!cursor-not-allowed'}
-        `}
-      >
-        <div className='flex items-center justify-center mr-1.5 w-5 h-5 rounded-[5px] bg-background-default-dimm'>
-          <RiAddLine className='w-3 h-3' />
-        </div>
-        <div className='flex items-center uppercase'>
-          {
-            isParallel
+  const renderTrigger = useCallback(
+    (open: boolean) => {
+      return (
+        <Button
+          variant={open ? 'ghost-accent' : 'ghost'}
+          size="medium"
+          className="btn-icon-left btn-rounded w-full"
+          disabled={nodesReadOnly}
+        >
+          <Aicon icon="icon-add" size={20} className="a-icon--btn"></Aicon>
+          <div className="w-full text-left">
+            {isParallel
               ? t('workflow.common.addParallelNode')
-              : t('workflow.panel.selectNextStep')
-          }
-        </div>
-      </div>
-    )
-  }, [t, nodesReadOnly, isParallel])
+              : t('workflow.panel.selectNextStep')}
+          </div>
+        </Button>
+      )
+    },
+    [t, nodesReadOnly, isParallel],
+  )
 
   return (
     <BlockSelector
@@ -88,10 +84,10 @@ const Add = ({
       onOpenChange={handleOpenChange}
       disabled={nodesReadOnly}
       onSelect={handleSelect}
-      placement='top'
+      placement="top"
       offset={0}
       trigger={renderTrigger}
-      popupClassName='!w-[328px]'
+      popupClassName="!w-[328px]"
       availableBlocksTypes={availableNextBlocks}
     />
   )

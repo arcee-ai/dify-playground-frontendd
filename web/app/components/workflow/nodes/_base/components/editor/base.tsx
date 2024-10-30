@@ -55,7 +55,9 @@ const Base: FC<Props> = ({
   } = useToggleExpend({ ref, hasFooter: false, isInNode })
 
   const editorContentMinHeight = minHeight - 28
-  const [editorContentHeight, setEditorContentHeight] = useState(editorContentMinHeight)
+  const [editorContentHeight, setEditorContentHeight] = useState(
+    editorContentMinHeight,
+  )
 
   const [isCopied, setIsCopied] = React.useState(false)
   const handleCopy = useCallback(() => {
@@ -67,29 +69,53 @@ const Base: FC<Props> = ({
   }, [value])
 
   return (
-    <Wrap className={cn(wrapClassName)} style={wrapStyle} isInNode={isInNode} isExpand={isExpand}>
-      <div ref={ref} className={cn(className, isExpand && 'h-full', 'rounded-lg border', isFocus ? 'bg-white border-gray-200' : 'bg-gray-100 border-gray-100 overflow-hidden')}>
-        <div className='flex justify-between items-center h-7 pt-1 pl-3 pr-2'>
-          <div className='text-xs font-semibold text-gray-700'>{title}</div>
-          <div className='flex items-center' onClick={(e) => {
-            e.nativeEvent.stopImmediatePropagation()
-            e.stopPropagation()
-          }}>
+    <Wrap
+      className={cn(wrapClassName)}
+      style={wrapStyle}
+      isInNode={isInNode}
+      isExpand={isExpand}
+    >
+      <div
+        ref={ref}
+        className={cn(
+          className,
+          isExpand && 'h-full',
+          'rounded-lg border',
+          isFocus
+            ? 'bg-white border-gray-400'
+            : 'bg-gray-50 border-gray-200 overflow-hidden',
+        )}
+      >
+        <div className="flex justify-between items-center h-7 pt-1 pl-3 pr-2">
+          <div className="text-xs font-semibold text-gray-700">{title}</div>
+          <div
+            className="flex items-center"
+            onClick={(e) => {
+              e.nativeEvent.stopImmediatePropagation()
+              e.stopPropagation()
+            }}
+          >
             {headerRight}
-            <div className='ml-1'>
-              <CodeGeneratorButton onGenerated={onGenerated} codeLanguages={codeLanguages}/>
+            <div className="ml-1">
+              <CodeGeneratorButton
+                onGenerated={onGenerated}
+                codeLanguages={codeLanguages}
+              />
             </div>
-            {!isCopied
-              ? (
-                <Clipboard className='mx-1 w-3.5 h-3.5 text-gray-500 cursor-pointer' onClick={handleCopy} />
-              )
-              : (
-                <ClipboardCheck className='mx-1 w-3.5 h-3.5 text-gray-500' />
-              )
-            }
+            {!isCopied ? (
+              <Clipboard
+                className="mx-1 w-3.5 h-3.5 text-gray-500 cursor-pointer"
+                onClick={handleCopy}
+              />
+            ) : (
+              <ClipboardCheck className="mx-1 w-3.5 h-3.5 text-gray-500" />
+            )}
 
-            <div className='ml-1'>
-              <ToggleExpandBtn isExpand={isExpand} onExpandChange={setIsExpand} />
+            <div className="ml-1">
+              <ToggleExpandBtn
+                isExpand={isExpand}
+                onExpandChange={setIsExpand}
+              />
             </div>
           </div>
         </div>
@@ -99,9 +125,7 @@ const Base: FC<Props> = ({
           onHeightChange={setEditorContentHeight}
           hideResize={isExpand}
         >
-          <div className='h-full pb-2'>
-            {children}
-          </div>
+          <div className="h-full pb-2">{children}</div>
         </PromptEditorHeightResizeWrap>
         {showFileList && fileList.length > 0 && (
           <FileListInLog fileList={fileList} />

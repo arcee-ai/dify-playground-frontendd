@@ -1,6 +1,5 @@
 import type { Viewport } from 'next'
 import { Archivo } from 'next/font/google'
-import DifyInfo from './dify-info'
 import I18nServer from './components/i18n-server'
 import BrowserInitor from './components/browser-initor'
 import SentryInitor from './components/sentry-initor'
@@ -63,7 +62,6 @@ const LocaleLayout = ({ children }: { children: React.ReactNode }) => {
             <I18nServer>{children}</I18nServer>
           </SentryInitor>
         </BrowserInitor>
-        <DifyInfo />
       </body>
     </html>
   )

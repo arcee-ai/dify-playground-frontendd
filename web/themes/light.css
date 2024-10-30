@@ -260,12 +260,14 @@ html[data-theme="light"] {
   --color-components-panel-bg: var(--color-basic-white);
   --color-components-panel-bg-blur: #fffffff2;
   --color-components-panel-border: var(--color-basic-darktrans-200);
-  --color-components-panel-border-subtle: var(--color-basic-darktrans-100);
+  --color-components-panel-border-subtle: var(--color-basic-darktrans-50);
   --color-components-panel-gradient-2: #f9fafb;
   --color-components-panel-gradient-1: var(--color-basic-white);
   --color-components-panel-bg-alt: var(--color-basic-gray-50);
   --color-components-panel-on-panel-item-bg: var(--color-basic-white);
-  --color-components-panel-on-panel-item-bg-hover: var(--color-basic-gray-100);
+  --color-components-panel-on-panel-item-bg-hover: var(
+    --color-basic-darktrans-50
+  );
   --color-components-panel-on-panel-item-bg-alt: var(--color-basic-gray-50);
 
   --color-components-panel-bg-transparent: var(--color-basic-trans);

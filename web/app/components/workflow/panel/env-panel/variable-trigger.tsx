@@ -1,7 +1,6 @@
 'use client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { RiAddLine } from '@remixicon/react'
 import Button from '@/app/components/base/button'
 import VariableModal from '@/app/components/workflow/panel/env-panel/variable-modal'
 import {
@@ -10,6 +9,7 @@ import {
   PortalToFollowElemTrigger,
 } from '@/app/components/base/portal-to-follow-elem'
 import type { EnvironmentVariable } from '@/app/components/workflow/types'
+import Aicon from '@/app/components/base/a-icon'
 
 type Props = {
   open: boolean
@@ -19,13 +19,7 @@ type Props = {
   onSave: (env: EnvironmentVariable) => void
 }
 
-const VariableTrigger = ({
-  open,
-  setOpen,
-  env,
-  onClose,
-  onSave,
-}: Props) => {
+const VariableTrigger = ({ open, setOpen, env, onClose, onSave }: Props) => {
   const { t } = useTranslation()
 
   return (
@@ -35,22 +29,24 @@ const VariableTrigger = ({
         setOpen(v => !v)
         open && onClose()
       }}
-      placement='left-start'
+      placement="left-start"
       offset={{
         mainAxis: 8,
         alignmentAxis: -104,
       }}
     >
-      <PortalToFollowElemTrigger onClick={() => {
-        setOpen(v => !v)
-        open && onClose()
-      }}>
-        <Button variant='primary'>
-          <RiAddLine className='mr-1 w-4 h-4' />
-          <span className='system-sm-medium'>{t('workflow.env.envPanelButton')}</span>
+      <PortalToFollowElemTrigger
+        onClick={() => {
+          setOpen(v => !v)
+          open && onClose()
+        }}
+      >
+        <Button variant="secondary" size="medium" className="btn-icon-left">
+          <Aicon icon="icon-add" size={20} className="a-icon--btn" />
+          <span>{t('workflow.env.envPanelButton')}</span>
         </Button>
       </PortalToFollowElemTrigger>
-      <PortalToFollowElemContent className='z-[11]'>
+      <PortalToFollowElemContent className="z-[11]">
         <VariableModal
           env={env}
           onSave={onSave}

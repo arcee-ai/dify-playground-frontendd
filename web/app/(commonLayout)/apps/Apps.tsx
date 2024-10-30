@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import useSWRInfinite from 'swr/infinite'
 import { useTranslation } from 'react-i18next'
 import { useDebounceFn } from 'ahooks'
@@ -27,6 +27,12 @@ import Button from '@/app/components/base/button'
 import Aicon from '@/app/components/base/a-icon'
 import CreateAppModal from '@/app/components/app/create-app-modal'
 import CreateAppTemplateDialog from '@/app/components/app/create-app-dialog'
+import CreateFromDSLModal from '@/app/components/app/create-from-dsl-modal'
+import { useProviderContext } from '@/context/provider-context'
+import Divider from '@/app/components/base/divider'
+export type CreateAppCardProps = {
+  onSuccess?: () => void
+}
 
 const getKey = (
   pageIndex: number,
@@ -56,10 +62,13 @@ const getKey = (
 
 const Apps = () => {
   const { t } = useTranslation()
+
+  const { onPlanInfoChanged } = useProviderContext()
   const router = useRouter()
   const { isCurrentWorkspaceEditor, isCurrentWorkspaceDatasetOperator }
     = useAppContext()
   const showTagManagementModal = useTagStore(s => s.showTagManagementModal)
+  const { replace } = useRouter()
   const [activeTab, setActiveTab] = useTabSearchParams({
     defaultTab: 'all',
   })
@@ -117,7 +126,11 @@ const Apps = () => {
       icon: <RiExchange2Line className="w-[14px] h-[14px] mr-1" />,
     },
   ]
-
+  const searchParams = useSearchParams()
+  const dslUrl = searchParams.get('remoteInstallUrl') || undefined
+  const [showCreateFromDSLModal, setShowCreateFromDSLModal] = useState(
+    !!dslUrl,
+  )
   useEffect(() => {
     document.title = `${t('common.menus.apps')} -  Dify`
     if (localStorage.getItem(NEED_REFRESH_APP_LIST_KEY) === '1') {
@@ -231,7 +244,7 @@ const Apps = () => {
                   variant="ghost"
                   onClick={() => {
                     setShowNewAppTemplateDialog(true)
-                    setShowDropdown(false) // Zamknij dropdown po kliknięciu
+                    setShowDropdown(false)
                   }}
                   className="btn-icon-left btn-rounded mt-2 justify-start"
                 >
@@ -241,6 +254,23 @@ const Apps = () => {
                     icon="icon-copy-fill"
                   />
                   <span>{t('app.newApp.startFromTemplate')}</span>
+                </Button>
+                <Divider className="mx-1" />
+                <Button
+                  size="medium"
+                  variant="ghost"
+                  onClick={() => {
+                    setShowCreateFromDSLModal(true)
+                    setShowDropdown(false)
+                  }}
+                  className="btn-icon-left btn-rounded justify-start"
+                >
+                  <Aicon
+                    size={20}
+                    className="a-icon--btn"
+                    icon="icon-add-note"
+                  />
+                  <span>{t('app.importDSL')}</span>
                 </Button>
               </div>
             )}
@@ -290,6 +320,21 @@ const Apps = () => {
         onClose={() => setShowNewAppTemplateDialog(false)}
         onSuccess={() => {
           setShowNewAppTemplateDialog(false)
+        }}
+      />
+      <CreateFromDSLModal
+        show={showCreateFromDSLModal}
+        onClose={() => {
+          setShowCreateFromDSLModal(false)
+
+          if (dslUrl)
+            replace('/')
+        }}
+        activeTab={'from-file'}
+        dslUrl={dslUrl}
+        onSuccess={() => {
+          onPlanInfoChanged()
+          setShowCreateFromDSLModal(false)
         }}
       />
     </>

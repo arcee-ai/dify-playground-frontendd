@@ -1,9 +1,4 @@
-import {
-  memo,
-  useCallback,
-  useState,
-} from 'react'
-import { RiMoreFill } from '@remixicon/react'
+import { memo, useCallback, useState } from 'react'
 import type { OffsetOptions } from '@floating-ui/react'
 import PanelOperatorPopup from './panel-operator-popup'
 import {
@@ -12,6 +7,8 @@ import {
   PortalToFollowElemTrigger,
 } from '@/app/components/base/portal-to-follow-elem'
 import type { Node } from '@/app/components/workflow/types'
+import Button from '@/app/components/base/button'
+import Aicon from '@/app/components/base/a-icon'
 
 type PanelOperatorProps = {
   id: string
@@ -36,33 +33,33 @@ const PanelOperator = ({
 }: PanelOperatorProps) => {
   const [open, setOpen] = useState(false)
 
-  const handleOpenChange = useCallback((newOpen: boolean) => {
-    setOpen(newOpen)
+  const handleOpenChange = useCallback(
+    (newOpen: boolean) => {
+      setOpen(newOpen)
 
-    if (onOpenChange)
-      onOpenChange(newOpen)
-  }, [onOpenChange])
+      if (onOpenChange)
+        onOpenChange(newOpen)
+    },
+    [onOpenChange],
+  )
 
   return (
     <PortalToFollowElem
-      placement='bottom-end'
+      placement="bottom-end"
       offset={offset}
       open={open}
       onOpenChange={handleOpenChange}
     >
       <PortalToFollowElemTrigger onClick={() => handleOpenChange(!open)}>
-        <div
-          className={`
-            flex items-center justify-center w-6 h-6 rounded-md cursor-pointer
-            hover:bg-black/5
-            ${open && 'bg-black/5'}
-            ${triggerClassName}
-          `}
+        <Button
+          size="medium"
+          variant={open ? 'ghost-accent' : 'ghost'}
+          className={`btn-icon ${triggerClassName}`}
         >
-          <RiMoreFill className={`w-4 h-4 ${inNode ? 'text-gray-500' : 'text-gray-700'}`} />
-        </div>
+          <Aicon size={20} icon="icon-more" className="a-icon--btn" />
+        </Button>
       </PortalToFollowElemTrigger>
-      <PortalToFollowElemContent className='z-[11]'>
+      <PortalToFollowElemContent className="z-[11]">
         <PanelOperatorPopup
           id={id}
           data={data}

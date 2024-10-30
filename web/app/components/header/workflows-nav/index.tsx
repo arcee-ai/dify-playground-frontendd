@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import produce from 'immer'
 import useSWRInfinite from 'swr/infinite'
 import { flatten } from 'lodash-es'
@@ -25,18 +25,20 @@ const getKey = (
   if (!pageIndex || previousPageData.has_more) {
     const params: any = {
       url: 'apps',
-      params: { page: pageIndex + 1, limit: 6, name: keywords },
+      params: {
+        page: pageIndex + 1,
+        limit: 6,
+        name: keywords,
+        mode: 'workflow',
+      },
     }
-
-    if (activeTab !== 'all')
-      params.params.mode = activeTab
-    else delete params.params.mode
 
     return params
   }
   return null
 }
 const WorkflowsNav = () => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [content, setContent] = useState('All')
   const currentPath = usePathname()
@@ -168,13 +170,15 @@ const WorkflowsNav = () => {
             <Button
               variant="ghost"
               size="medium"
-              onClick={() => {}}
               className="btn-icon-left btn-rounded w-full justify-start text-left"
+              onClick={() => {
+                router.push('/apps')
+              }}
             >
               <Aicon icon="icon-grid" size={20} className="a-icon--btn" />
               <span>Manage All</span>
             </Button>
-            <Divider />
+            {/* <Divider />
             <Button
               variant="ghost"
               size="medium"
@@ -184,7 +188,7 @@ const WorkflowsNav = () => {
               <Aicon icon="icon-add" size={20} className="a-icon--btn" />
               <div className="w-full">Add new</div>
               <Aicon icon="icon-right" size={20} className="a-icon--btn" />
-            </Button>
+          </Button> */}
           </div>
         </div>
       )}

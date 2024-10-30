@@ -17,7 +17,10 @@ type MailAndPasswordAuthProps = {
 
 const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/
 
-export default function MailAndPasswordAuth({ isInvite, allowRegistration }: MailAndPasswordAuthProps) {
+export default function MailAndPasswordAuth({
+  isInvite,
+  allowRegistration,
+}: MailAndPasswordAuthProps) {
   const { t } = useTranslation()
   const { locale } = useContext(I18NContext)
   const router = useRouter()
@@ -59,8 +62,11 @@ export default function MailAndPasswordAuth({ isInvite, allowRegistration }: Mai
         language: locale,
         remember_me: true,
       }
-      if (isInvite)
-        loginData.invite_token = decodeURIComponent(searchParams.get('invite_token') as string)
+      if (isInvite) {
+        loginData.invite_token = decodeURIComponent(
+          searchParams.get('invite_token') as string,
+        )
+      }
       const res = await login({
         url: '/login',
         body: loginData,
@@ -96,72 +102,86 @@ export default function MailAndPasswordAuth({ isInvite, allowRegistration }: Mai
         })
       }
     }
-
     finally {
       setIsLoading(false)
     }
   }
 
-  return <form onSubmit={() => { }}>
-    <div className='mb-3'>
-      <label htmlFor="email" className="my-2 system-md-semibold text-text-secondary">
-        {t('login.email')}
-      </label>
-      <div className="mt-1">
-        <Input
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          disabled={isInvite}
-          id="email"
-          type="email"
-          autoComplete="email"
-          placeholder={t('login.emailPlaceholder') || ''}
-          tabIndex={1}
-        />
-      </div>
-    </div>
-
-    <div className='mb-3'>
-      <label htmlFor="password" className="my-2 flex items-center justify-between">
-        <span className='system-md-semibold text-text-secondary'>{t('login.password')}</span>
-        <Link href={`/reset-password?${searchParams.toString()}`} className='system-xs-regular text-components-button-secondary-accent-text'>
-          {t('login.forget')}
-        </Link>
-      </label>
-      <div className="relative mt-1">
-        <Input
-          id="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter')
-              handleEmailPasswordLogin()
-          }}
-          type={showPassword ? 'text' : 'password'}
-          autoComplete="current-password"
-          placeholder={t('login.passwordPlaceholder') || ''}
-          tabIndex={2}
-        />
-        <div className="absolute inset-y-0 right-0 flex items-center">
-          <Button
-            type="button"
-            variant='ghost'
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? '👀' : '😝'}
-          </Button>
+  return (
+    <form onSubmit={() => {}}>
+      <div className="mb-3">
+        <label
+          htmlFor="email"
+          className="my-2 system-md-semibold text-text-secondary"
+        >
+          {t('login.email')}
+        </label>
+        <div className="mt-1">
+          <Input
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            disabled={isInvite}
+            id="email"
+            type="email"
+            autoComplete="email"
+            placeholder={t('login.emailPlaceholder') || ''}
+            tabIndex={1}
+          />
         </div>
       </div>
-    </div>
 
-    <div className='mb-2'>
-      <Button
-        tabIndex={2}
-        variant='primary'
-        onClick={handleEmailPasswordLogin}
-        disabled={isLoading || !email || !password}
-        className="w-full"
-      >{t('login.signBtn')}</Button>
-    </div>
-  </form>
+      <div className="mb-3">
+        <label
+          htmlFor="password"
+          className="my-2 flex items-center justify-between"
+        >
+          <span className="system-md-semibold text-text-secondary">
+            {t('login.password')}
+          </span>
+          <Link
+            href={`/reset-password?${searchParams.toString()}`}
+            className="system-xs-regular text-components-button-secondary-accent-text"
+          >
+            {t('login.forget')}
+          </Link>
+        </label>
+        <div className="relative mt-1">
+          <Input
+            id="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter')
+                handleEmailPasswordLogin()
+            }}
+            type={showPassword ? 'text' : 'password'}
+            autoComplete="current-password"
+            placeholder={t('login.passwordPlaceholder') || ''}
+            tabIndex={2}
+          />
+          <div className="absolute inset-y-0 right-0 flex items-center">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? '👀' : '😝'}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-2 pt-4">
+        <Button
+          tabIndex={2}
+          variant="primary"
+          onClick={handleEmailPasswordLogin}
+          disabled={isLoading || !email || !password}
+          className="w-full"
+        >
+          {t('login.signBtn')}
+        </Button>
+      </div>
+    </form>
+  )
 }

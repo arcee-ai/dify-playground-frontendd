@@ -11,10 +11,7 @@ import Button from '@/app/components/base/button'
 import Input from '@/app/components/base/input'
 import Modal from '@/app/components/base/modal'
 import { ToastContext } from '@/app/components/base/toast'
-import {
-  importApp,
-  importAppFromUrl,
-} from '@/service/apps'
+import { importApp, importAppFromUrl } from '@/service/apps'
 import { useAppContext } from '@/context/app-context'
 import { useProviderContext } from '@/context/provider-context'
 import AppsFull from '@/app/components/billing/apps-full-in-dialog'
@@ -35,7 +32,13 @@ export enum CreateFromDSLModalTab {
   FROM_URL = 'from-url',
 }
 
-const CreateFromDSLModal = ({ show, onSuccess, onClose, activeTab = CreateFromDSLModalTab.FROM_FILE, dslUrl = '' }: CreateFromDSLModalProps) => {
+const CreateFromDSLModal = ({
+  show,
+  onSuccess,
+  onClose,
+  activeTab = CreateFromDSLModalTab.FROM_FILE,
+  dslUrl = '',
+}: CreateFromDSLModalProps) => {
   const { push } = useRouter()
   const { t } = useTranslation()
   const { notify } = useContext(ToastContext)
@@ -63,7 +66,8 @@ const CreateFromDSLModal = ({ show, onSuccess, onClose, activeTab = CreateFromDS
 
   const { isCurrentWorkspaceEditor } = useAppContext()
   const { plan, enableBilling } = useProviderContext()
-  const isAppsFull = (enableBilling && plan.usage.buildApps >= plan.total.buildApps)
+  const isAppsFull
+    = enableBilling && plan.usage.buildApps >= plan.total.buildApps
 
   const isCreatingRef = useRef(false)
   const onCreate: MouseEventHandler = async () => {
@@ -124,71 +128,67 @@ const CreateFromDSLModal = ({ show, onSuccess, onClose, activeTab = CreateFromDS
 
   return (
     <Modal
-      className='p-0 w-[520px] rounded-2xl border-[0.5px] border-components-panel-border bg-components-panel-bg shadow-xl'
+      className="p-0 w-[520px] rounded-2xl border-[0.5px] border-components-panel-border bg-components-panel-bg shadow-xl"
       isShow={show}
-      onClose={() => { }}
+      onClose={() => {}}
     >
-      <div className='flex items-center justify-between pt-6 pl-6 pr-5 pb-3 text-text-primary title-2xl-semi-bold'>
+      <div className="flex items-center justify-between pt-6 pl-6 pr-5 pb-3 text-text-primary title-2xl-semi-bold">
         {t('app.importFromDSL')}
         <div
-          className='flex items-center w-8 h-8 cursor-pointer'
+          className="flex items-center w-8 h-8 cursor-pointer"
           onClick={() => onClose()}
         >
-          <RiCloseLine className='w-5 h-5 text-text-tertiary' />
+          <RiCloseLine className="w-5 h-5 text-text-tertiary" />
         </div>
       </div>
-      <div className='flex items-center px-6 h-9 space-x-6 system-md-semibold text-text-tertiary border-b border-divider-subtle'>
-        {
-          tabs.map(tab => (
-            <div
-              key={tab.key}
-              className={cn(
-                'relative flex items-center h-full cursor-pointer',
-                currentTab === tab.key && 'text-text-primary',
-              )}
-              onClick={() => setCurrentTab(tab.key)}
-            >
-              {tab.label}
-              {
-                currentTab === tab.key && (
-                  <div className='absolute bottom-0 w-full h-[2px] bg-util-colors-blue-brand-blue-brand-600'></div>
-                )
-              }
-            </div>
-          ))
-        }
+      <div className="flex items-center px-6 h-9 space-x-6 system-md-semibold text-gray-700 border-b border-divider-subtle">
+        {tabs.map(tab => (
+          <div
+            key={tab.key}
+            className={cn(
+              'relative flex items-center h-full cursor-pointer',
+              currentTab === tab.key && 'text-text-primary',
+            )}
+            onClick={() => setCurrentTab(tab.key)}
+          >
+            {tab.label}
+            {currentTab === tab.key && (
+              <div className="absolute bottom-0 w-full h-[2px] bg-primary-500"></div>
+            )}
+          </div>
+        ))}
       </div>
-      <div className='px-6 py-4'>
-        {
-          currentTab === CreateFromDSLModalTab.FROM_FILE && (
-            <Uploader
-              className='mt-0'
-              file={currentFile}
-              updateFile={handleFile}
+      <div className="px-6 py-4">
+        {currentTab === CreateFromDSLModalTab.FROM_FILE && (
+          <Uploader
+            className="mt-0"
+            file={currentFile}
+            updateFile={handleFile}
+          />
+        )}
+        {currentTab === CreateFromDSLModalTab.FROM_URL && (
+          <div>
+            <div className="mb-1 system-md-semibold leading6">DSL URL</div>
+            <Input
+              placeholder={t('app.importFromDSLUrlPlaceholder') || ''}
+              value={dslUrlValue}
+              onChange={e => setDslUrlValue(e.target.value)}
             />
-          )
-        }
-        {
-          currentTab === CreateFromDSLModalTab.FROM_URL && (
-            <div>
-              <div className='mb-1 system-md-semibold leading6'>DSL URL</div>
-              <Input
-                placeholder={t('app.importFromDSLUrlPlaceholder') || ''}
-                value={dslUrlValue}
-                onChange={e => setDslUrlValue(e.target.value)}
-              />
-            </div>
-          )
-        }
+          </div>
+        )}
       </div>
       {isAppsFull && (
-        <div className='px-6'>
-          <AppsFull className='mt-0' loc='app-create-dsl' />
+        <div className="px-6">
+          <AppsFull className="mt-0" loc="app-create-dsl" />
         </div>
       )}
-      <div className='flex justify-end px-6 py-5'>
-        <Button className='mr-2' onClick={onClose}>{t('app.newApp.Cancel')}</Button>
-        <Button disabled={buttonDisabled} variant="primary" onClick={onCreate}>{t('app.newApp.Create')}</Button>
+      <div className="flex justify-end px-6 py-5">
+        <Button className="mr-2" onClick={onClose}>
+          {t('app.newApp.Cancel')}
+        </Button>
+        <Button disabled={buttonDisabled} variant="primary" onClick={onCreate}>
+          {t('app.newApp.Create')}
+        </Button>
       </div>
     </Modal>
   )
