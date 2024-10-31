@@ -43,7 +43,7 @@ const ModelName: FC<ModelNameProps> = ({
         className="truncate"
         title={modelItem.label[language] || modelItem.label.en_US}
       >
-        {modelItem.label[language] || modelItem.label.en_US /* 'SuperNova' */}
+        {/* modelItem.label[language] || modelItem.label.en_US */ 'SuperNova'}
       </div>
       {showModelType && modelItem.model_type && (
         <ModelBadge className={classNames('ml-1', modelTypeClassName)}>
