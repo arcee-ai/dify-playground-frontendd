@@ -5,7 +5,6 @@
 files=$(git diff --cached --name-only)
 
 # check if api or web directory is modified
-
 api_modified=false
 web_modified=false
 
@@ -21,9 +20,11 @@ do
 done
 
 # run linters based on the modified modules
-
 if $api_modified; then
     echo "Running Ruff linter on api module"
+
+    # Activate the virtual environment
+    source /Users/aleksy/Documents/GitHub/dify-playground/api/.venv/bin/activate
 
     # python style checks rely on `ruff` in path
     if ! command -v ruff &> /dev/null; then
@@ -38,7 +39,6 @@ if $api_modified; then
     ruff check --preview ./api || status=$?
 
     status=${status:-0}
-
 
     if [ $status -ne 0 ]; then
       echo "Ruff linter on api module error, exit code: $status"
