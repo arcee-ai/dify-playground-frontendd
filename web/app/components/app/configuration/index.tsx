@@ -253,12 +253,18 @@ const Configuration: FC = () => {
     }
     hideSelectDataSet()
     const {
-      allEconomic,
+      allExternal,
+      allInternal,
+      mixtureInternalAndExternal,
       mixtureHighQualityAndEconomic,
       inconsistentEmbeddingModel,
     } = getSelectedDatasetsMode(newDatasets)
 
-    if (allEconomic || mixtureHighQualityAndEconomic || inconsistentEmbeddingModel)
+    if (
+      (allInternal && (mixtureHighQualityAndEconomic || inconsistentEmbeddingModel))
+      || mixtureInternalAndExternal
+      || allExternal
+    )
       setRerankSettingModalOpen(true)
 
     const { datasets, retrieval_model, score_threshold_enabled, ...restConfigs } = datasetConfigs
@@ -589,7 +595,7 @@ const Configuration: FC = () => {
             annotation_reply: modelConfig.annotation_reply,
             external_data_tools: modelConfig.external_data_tools,
             dataSets: datasets || [],
-            // eslint-disable-next-line multiline-ternary
+
             agentConfig: res.mode === 'agent-chat' ? {
               max_iteration: DEFAULT_AGENT_SETTING.max_iteration,
               ...modelConfig.agent_mode,
@@ -623,7 +629,6 @@ const Configuration: FC = () => {
         setHasFetchedDetail(true)
       })
     })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appId])
 
   const promptEmpty = (() => {
