@@ -1,6 +1,0 @@
-posthog
-pydantic_core
-lago-python-client
-boto3
-# TODO: move to a a usable dev config (requirements.dev.txt, some other dep manager, etc)
-# debugpy # uncomment to allow debug config

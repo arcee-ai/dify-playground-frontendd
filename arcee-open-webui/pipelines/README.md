@@ -1,3 +1,0 @@
-# openweb-ui/pipelines
-
-TODO

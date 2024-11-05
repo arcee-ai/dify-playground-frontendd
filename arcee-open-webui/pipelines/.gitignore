@@ -1,2 +1,0 @@
-# pipelines writes a directory for each pipeline at runtime, do not include these in git
-*/
