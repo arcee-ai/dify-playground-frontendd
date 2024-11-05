@@ -1,0 +1,14 @@
+# Pipelines image with Arcee pipelines baked in
+
+FROM ghcr.io/open-webui/pipelines:main
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY pipelines/requirements.txt /app/pipelines/requirements.txt
+RUN uv pip install --system -r pipelines/requirements.txt --no-cache-dir
+
+COPY pipelines /app/pipelines
+

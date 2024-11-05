@@ -1,0 +1,7 @@
+*
+!Dockerfile
+!static/
+!entrypoints/
+!openwebui/
+!pipelines/
+!arcee_pipelines/

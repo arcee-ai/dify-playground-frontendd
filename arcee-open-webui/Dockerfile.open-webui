@@ -1,0 +1,49 @@
+FROM ghcr.io/open-webui/open-webui:main
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Arcee Branding
+COPY ./static/favicon.png /app/backend/static/favicon.png
+COPY ./static/favicon.png /app/build/static/favicon.png
+COPY ./static/favicon.png /app/build/favicon.png
+COPY ./static/splash.png /app/build/static/splash.png
+
+# Generic settings, may be overridden at runtime
+ENV ENV=prod
+ENV WEBUI_NAME="Arcee Chat"
+ENV WEBUI_BUILD_HASH="arcee-1"
+ENV ADMIN_EMAIL="support@arcee.ai"
+ENV USER_AGENT="arcee-chat/${WEBUI_BUILD_HASH}"
+ENV JWT_EXPIRES_IN="2w"
+ENV SAFE_MODE=True
+ENV OFFLINE_MODE=True
+ENV ENABLE_EVALUATION_ARENA_MODELS=False
+
+# Move baked in models to /app/huggingface so that a mount at /app/backend/data does not overwrite it
+ENV HF_HOME="/app/huggingface/embedding/models"
+ENV SENTENCE_TRANSFORMERS_HOME="/app/huggingface/embedding/models"
+ENV TIKTOKEN_CACHE_DIR="/app/huggingface/tiktoken"
+ENV WHISPER_MODEL_DIR="/app/huggingface/whisper/models"
+RUN mv /app/backend/data/cache/ /app/huggingface/
+
+# Flip huggingface into offline mode
+ENV HF_DATASETS_OFFLINE="1"
+ENV HF_HUB_OFFLINE="1"
+
+# CUSTOM: patch openwebui source for arcee's auth
+
+# Enable http2 for authlib/oauth
+RUN pip install --no-cache-dir httpx[http2]
+COPY ./openwebui/enable_authlib_http2.py /app/
+RUN python /app/enable_authlib_http2.py
+
+# Patch openwebui to pass oauth_sub in user payload to pipelines
+COPY ./openwebui/enable_pass_user_sub.py /app/
+RUN python /app/enable_pass_user_sub.py
+
+# Custom Entrypoint
+COPY ./entrypoints/open-webui-entrypoint.sh /app/open-webui-entrypoint.sh
+ENTRYPOINT [ "/app/open-webui-entrypoint.sh" ]

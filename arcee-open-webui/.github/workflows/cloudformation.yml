@@ -1,0 +1,144 @@
+name: CloudFormation (open-webui)
+
+# Only allow one concurrent deploy at a time
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  schedule:
+    - cron: "31 9 * * *"
+  push:
+    branches: ["main"]
+    # Publish semver tags as releases.
+    tags: ["v*.*.*"]
+    paths:
+      - "cdk/**"
+      - ".github/workflows/cloudformation.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "cdk/**"
+      - ".github/workflows/cloudformation.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - id: slugify
+        uses: eltimn/slugify-action@v2.0.2
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".node-version"
+          cache: pnpm
+          cache-dependency-path: "cdk/pnpm-lock.yaml"
+
+      - name: Install Dependencies
+        working-directory: cdk
+        run: |
+          pnpm install --frozen-lockfile
+
+      - name: Synth dist cloudformation templates
+        working-directory: cdk
+        run: |
+          ./dist.sh
+
+      - name: Save artifacts to GitHub
+        uses: actions/upload-artifact@v4
+        with:
+          name: "cloudformation"
+          path: "cdk/dist/arcee/"
+          if-no-files-found: "error"
+
+      - name: Configure GitHub AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_OIDC_ROLE_TO_ASSUME }}
+
+      - name: Assume Delivery Infra Role (Dev)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_DELIVERY_ROLE_TO_ASSUME }}
+          role-session-name: arcee-dev-managed
+          role-chaining: true
+
+      - name: Upload templates to S3
+        run: |
+          echo "### CloudFormation Delivery (Dev)" >> $GITHUB_STEP_SUMMARY
+
+          # Upload to versioned path
+          aws s3 cp --recursive cdk/dist/arcee/ "s3://${{ vars.DELIVERY_S3_BUCKET }}/cfn/${{steps.slugify.outputs.sha}}/" --acl public-read
+          echo "- s3://${{ vars.DELIVERY_S3_BUCKET }}/cfn/${{steps.slugify.outputs.sha}}/" >> $GITHUB_STEP_SUMMARY
+
+          if [[ ${{ github.event_name }} == "push" ]]; then
+            # Also upload to latest
+            aws s3 cp --recursive cdk/dist/arcee/ "s3://${{ vars.DELIVERY_S3_BUCKET }}/cfn/latest/" --acl public-read
+            echo "- s3://${{ vars.DELIVERY_S3_BUCKET }}/cfn/latest/" >> $GITHUB_STEP_SUMMARY
+            echo "- Quick Link: https://console.aws.amazon.com/cloudformation/home?region=${{ vars.AWS_REGION }}#/stacks/quickcreate?templateURL=https://${{ vars.DELIVERY_S3_BUCKET }}.s3.${{ vars.AWS_REGION }}.amazonaws.com/cfn/latest/openwebui.json" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  promote:
+    if: ${{ github.event_name == 'push' }}
+    needs:
+      - build
+    environment: prod
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - id: slugify
+        uses: eltimn/slugify-action@v2.0.2
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: "cloudformation"
+          path: cdk/dist/arcee
+
+      - name: Configure GitHub AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_OIDC_ROLE_TO_ASSUME }}
+
+      - name: Assume Delivery Infra Role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_DELIVERY_ROLE_TO_ASSUME }}
+          role-session-name: arcee-prod-managed
+          role-chaining: true
+
+      - name: Upload template to S3
+        run: |
+          echo "### CloudFormation Delivery (Prod)" >> $GITHUB_STEP_SUMMARY
+
+          # Upload to versioned path
+          aws s3 cp --recursive cdk/dist/arcee/ "s3://${{ vars.DELIVERY_S3_BUCKET }}/cfn/${{steps.slugify.outputs.sha}}/" --acl public-read
+          echo "- s3://${{ vars.DELIVERY_S3_BUCKET }}/cfn/${{steps.slugify.outputs.sha}}/" >> $GITHUB_STEP_SUMMARY
+
+          if [[ ${{ github.event_name }} == "push" ]]; then
+            # Also upload to latest
+            aws s3 cp --recursive cdk/dist/arcee/ "s3://${{ vars.DELIVERY_S3_BUCKET }}/cfn/latest/" --acl public-read
+            echo "- s3://${{ vars.DELIVERY_S3_BUCKET }}/cfn/latest/" >> $GITHUB_STEP_SUMMARY
+            echo "- Quick Link: https://console.aws.amazon.com/cloudformation/home?region=${{ vars.AWS_REGION }}#/stacks/quickcreate?templateURL=https://${{ vars.DELIVERY_S3_BUCKET }}.s3.${{ vars.AWS_REGION }}.amazonaws.com/cfn/latest/openwebui.json" >> $GITHUB_STEP_SUMMARY
+          fi
