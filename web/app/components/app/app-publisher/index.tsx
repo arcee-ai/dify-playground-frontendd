@@ -124,7 +124,7 @@ const AppPublisher = ({
     >
       <PortalToFollowElemTrigger onClick={handleTrigger}>
         <Button variant="primary" className="btn-icon-left" disabled={disabled}>
-          <Aicon size={20} icon="icon-upload" className="a-icon--btn" />
+          <Aicon size={20} icon="icon-publish" className="a-icon--btn" />
           <span>{t('workflow.common.publish')}</span>
         </Button>
       </PortalToFollowElemTrigger>
