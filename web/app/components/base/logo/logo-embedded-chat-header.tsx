@@ -9,7 +9,7 @@ const LogoEmbeddedChatHeader: FC<LogoEmbeddedChatHeaderProps> = ({
 }) => {
   return (
     <img
-      src='/logo/logo-embedded-chat-header.png'
+      src='/logo/favicon.png'
       className={`block w-auto h-6 ${className}`}
       alt='logo'
     />
